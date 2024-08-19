@@ -1,0 +1,19 @@
+<% @document_title = 'ログイン' %>
+<% @page_title = '管理者ログイン' %>
+<%= form_with url: login_path do |f| %>
+<div class="mb-3">
+    <table>
+        <tr>
+            <th><%= f.label :email, 'E-mail' %></th>
+            <td><%= f.email_field :email %></td>
+        </tr>
+        <tr>
+            <th><%= f.label :password, 'パスワード' %></th>
+            <td><%= f.password_field :password %></td>
+        </tr>
+    </table>
+</div>
+<div class="mb-3">
+<p><%= f.submit 'ログイン' %></p>
+</div>
+<% end %>

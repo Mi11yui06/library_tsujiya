@@ -1,0 +1,73 @@
+<% @document_title = "会員一覧" %>
+<div class="container-fluid py-3">
+    <div class="row"><!-- グリッド（行）-->
+        <div class="col-3"><!-- グリッド（左列）-->
+            <form class="card" action="" method="get">
+                <div class="card-header">検索フォーム</div>
+                <div class="card-body">
+                    <%= form_with url: members_path, method: :get, local: true, class: "mb-3" do |f|%>
+                        <div class="form-row">
+                            <div class="form-group col-md-4 mb-3">
+                                <%= f.label :search_id, 'ID' %>
+                                <%= f.text_field :search_id, value: params[:search_id], class: "form-control" %>
+                            </div>
+                            <div class="form-group col-md-7 mb-3">
+                                <%= f.label :search_name, '氏名' %>
+                                <%= f.text_field :search_name, value: params[:search_name], class: "form-control" %>
+                            </div>
+                        </div>                         
+                </div>
+                <div class="card-footer d-flex justify-content-around">
+                        <%= f.submit '検索する', name: nil, class: "btn btn-primary btn-fullwidth btn-margin" %>
+                        <%= link_to 'クリア', members_path, class: "btn btn-secondary btn-fullwidth"%>
+                </div>
+                <% end %>
+            </form>
+        </div>
+        <div class="col-9"><!-- グリッド（右列）-->
+            <div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
+                <h1 class="h3">会員一覧</h1>
+                <%= button_to '新規登録', new_member_path, method: :get, class: "btn btn-sm btn-outline-primary"%>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th><th>氏名</th><th>郵便番号</th><th>住所</th><th>電話番号</th><th>E-mail</th><th>生年月日</th><th>入会年月日</th><th>退会年月日</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        <% @members.each do |m| %>
+                        <tr>
+                            <td><%= m.id %></td>
+                            <td><%= link_to m.name, member_path(m) %></td>
+                            <td><%= m.post_code %></td>
+                            <td><%= m.address %></td>
+                            <td><%= m.tel %></td>
+                            <td><%= m.email %></td>
+                            <td><%= m.birth_date %></td>
+                            <td><%= m.join_date %></td>
+                            <td><%= m.remove_date %></td>
+                        </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+                <%= paginate @members, theme: 'bootstrap-5' %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% 
+=begin %>
+bootstrapはlink_toでもボタンにしてくれるので、javascriptは必要ない
+<script>
+    function clearSearch() {
+        // フォームのリセット
+        document.querySelector('form').reset();
+        // 検索条件をリセットするために、現在のページにリダイレクト
+        window.location.href = '<%= members_path %>';
+    }
+</script>
+<% 
+=end %>

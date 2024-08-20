@@ -36,5 +36,5 @@
         <td><%= @member.remove_date %></td>
     </tr>
 </table>
-<p><%= button_to '編集する', edit_member_path, method: :get, class: "btn btn-sm btn-outline-primary"%></p>
+<p><%= link_to '編集する', edit_member_path, method: :get, class: "btn btn-sm btn-outline-primary"%></p>
 <p><%= link_to '一覧に戻る', members_path %></p>

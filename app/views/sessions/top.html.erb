@@ -1,19 +1,17 @@
 <% @document_title = '図書管理システム' %>
 <div class="mb-3">
     <div class="card">
-        <div class="card-header">会員管理</div>
+        <div class="card-header">会員台帳管理</div>
         <div class="card-body">
-            <%= link_to '新規会員登録', new_member_path %><br>
-            <%= link_to '会員一覧', members_path %><br>
+            <%= link_to '会員台帳', members_path %><br>
         </div>
     </div>
 </div>
 <div class="mb-3">
     <div class="card">
-        <div class="card-header">資料管理</div>
+        <div class="card-header">資料目録管理</div>
         <div class="card-body">
-            新規資料登録<br>
-            資料一覧<br>
+            <%= link_to '資料目録', catalogs_path %><br>
         </div>
     </div>
 </div>
@@ -21,8 +19,7 @@
     <div class="card">
         <div class="card-header">在庫管理</div>
         <div class="card-body">
-            新規資料登録<br>
-            資料一覧<br>
+            <%= link_to '在庫台帳', stocks_path %><br>
         </div>
     </div>
 </div>
@@ -30,8 +27,7 @@
     <div class="card">
         <div class="card-header">貸出管理</div>
         <div class="card-body">
-            新規資料登録<br>
-            資料一覧<br>
+            貸出台帳<br>
         </div>
     </div>
 </div>
@@ -39,7 +35,6 @@
     <div class="card">
         <div class="card-header">延滞対応</div>
         <div class="card-body">
-            新規資料登録<br>
             資料一覧<br>
         </div>
     </div>

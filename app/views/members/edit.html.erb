@@ -9,11 +9,11 @@
         <td><%= @member.id %></td>
     </tr>
     <tr>
-        <th class="table-secondary" style="width: 20%"><%= f.label :name, '氏名' %></th>
+        <th class="table-secondary" style="width: 20%"><%= f.label :name, '氏名' %><span style="color: red;">*</span></th>
         <td><%= f.text_field :name %></td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :post_code, '郵便番号' %></th>
+        <th class="table-secondary"><%= f.label :post_code, '郵便番号' %><span style="color: red;">*</span></th>
         <td>
             <div class="d-flex align-items-center">
             <%= f.text_field :post_code, value: @member.post_code.gsub(/〒|-/, '')%>
@@ -22,23 +22,23 @@
         </td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :address, '住所' %></th>
+        <th class="table-secondary"><%= f.label :address, '住所' %><span style="color: red;">*</span></th>
         <td><%= f.text_field :address, size: 50 %></td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :tel, '電話番号' %></th>
+        <th class="table-secondary"><%= f.label :tel, '電話番号' %><span style="color: red;">*</span></th>
         <td><%= f.text_field :tel %></td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :email, 'E-mail' %></th>
+        <th class="table-secondary"><%= f.label :email, 'E-mail' %><span style="color: red;">*</span></th>
         <td><%= f.email_field :email, size: 50 %></td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :birth_date, '生年月日' %></th>
+        <th class="table-secondary"><%= f.label :birth_date, '生年月日' %><span style="color: red;">*</span></th>
         <td><%= @member.birth_date %></td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :birth_date, '入会年月日' %></th>
+        <th class="table-secondary"><%= f.label :birth_date, '入会年月日' %><span style="color: red;">*</span></th>
         <td><%= @member.join_date %></td>
     </tr>
     <tr>
@@ -48,4 +48,4 @@
 </table>
 <p><%= f.submit '更新する', class: "btn btn-outline-primary"%></p>
 <% end %>
-<p><%= link_to 'キャンセル', members_path %></p>
+<p><%= link_to 'キャンセル', member_path %></p>

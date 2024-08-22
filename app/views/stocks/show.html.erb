@@ -1,0 +1,33 @@
+<% @document_title = "在庫台帳詳細" %>
+<div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
+    <h1 class="h3">在庫詳細画面</h1>
+    <%= button_to '削除する', stock_path(@stock), method: :delete, onclick: "return confirm('本当に削除しますか？')" , class: "btn btn-sm btn-outline-danger"%>
+</div>
+<table class="table table-bordered border-dark">
+    <tr>
+        <th class="table-secondary" style="width: 20%">資料ID</th>
+        <td><%= @stock.id %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary">ISBN番号</th>
+        <td><%= @stock.catalog.isbn %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary">資料名</th>
+        <td><%= @stock.catalog.title %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary">入荷年月日</th>
+        <td><%= @stock.arrival_date %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary">廃棄年月日</th>
+        <td><%= @stock.disposal_date %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary">備考</th>
+        <td><%= @stock.remarks %></td>
+    </tr>
+</table>
+<p><%= link_to '編集する', edit_stock_path, method: :get, class: "btn btn-sm btn-outline-primary"%></p>
+<p><%= link_to '一覧に戻る', stocks_path %></p>

@@ -1,0 +1,60 @@
+<% @document_title = "在庫台帳" %>
+<div class="container-fluid py-3">
+    <div class="row"><!-- グリッド（行）-->
+        <div class="col-3"><!-- グリッド（左列）-->
+            <form class="card" action="" method="get">
+                <div class="card-header">検索フォーム</div>
+                <div class="card-body">
+                    <%= form_with url: stocks_path, method: :get, local: true, class: "mb-3" do |f|%>
+                        <div class="form-row">
+                            <div class="form-group col-md-4 mb-3">
+                                <%= f.label :search_id, '資料ID' %>
+                                <%= f.text_field :search_id, value: params[:search_id], class: "form-control" %>
+                            </div>
+                            <div class="form-group col-md-7 mb-3">
+                                <%= f.label :search_isbn, 'ISBN番号' %>
+                                <%= f.text_field :search_isbn, value: params[:search_isbn], class: "form-control" %>
+                            </div>
+                            <div class="form-group col-md-10 mb-3">
+                                <%= f.label :search_name, '資料名' %>
+                                <%= f.text_field :search_title, value: params[:search_title], class: "form-control" %>
+                            </div>
+                        </div>                         
+                </div>
+                <div class="card-footer d-flex justify-content-around">
+                        <%= f.submit '検索する', name: nil, class: "btn btn-primary btn-fullwidth btn-margin" %>
+                        <%= link_to 'クリア', stocks_path, class: "btn btn-secondary btn-fullwidth"%>
+                </div>
+                <% end %>
+            </form>
+        </div>
+        <div class="col-9"><!-- グリッド（右列）-->
+            <div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
+                <h1 class="h3">在庫台帳一覧</h1>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>資料ID</th><th>ISBN番号</th><th>資料名</th><th>入荷年月日</th><th>廃棄年月日</th><th>備考</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        <% @stocks.each do |s| %>
+                        <tr>
+                            <td><%= link_to s.id, stock_path(s) %></td>
+                            <td><%= s.catalog.isbn %></td>
+                            <td><%= s.catalog.title %></td>
+                            <td><%= s.arrival_date %></td>
+                            <td><%= s.disposal_date %></td>
+                            <td><%= s.remarks %></td>
+                        </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+                <%= paginate @stocks, theme: 'bootstrap-5' %>
+            </div>
+        </div>
+    </div>
+</div>
+

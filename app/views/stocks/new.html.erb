@@ -1,0 +1,28 @@
+<% @document_title = "在庫台帳登録" %>
+<div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
+    <h1 class="h3">在庫台帳登録</h1>
+</div>
+<%= form_with model: @stock do |f|%>
+<%= f.hidden_field :catalog_id, value: params[:catalog_id] %>
+<table class="table table-bordered border-dark">
+    <tr>
+        <th class="table-secondary" style="width: 20%">ISBN番号</th>
+        <td><%= @catalog.isbn %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary">資料名</th>
+        <td><%= @catalog.title %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary"><%= f.label :arrival_date, '入荷年月日' %></th>
+        <td><%= f.date_select :arrival_date, start_year: 1950, end_year: Time.now.year %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary">冊数</th>
+        <td><%= f.number_field :number_of_copies, id: 'quantity', min: 1, value: 1%></td>
+    </tr>
+</table>
+<p><%= f.submit '登録する', class: "btn btn-outline-primary"%></p>
+<% end %>
+<p><%= link_to 'キャンセル', stocks_path %></p>
+

@@ -1,0 +1,34 @@
+<% @document_title = "在庫台帳編集" %>
+<div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
+    <h1 class="h3">在庫台帳編集</h1>
+</div>
+<%= form_with model: @stock do |f|%>
+<table class="table table-bordered border-dark">
+    <tr>
+        <th class="table-secondary" style="width: 20%">資料ID</th>
+        <td><%= @stock.id %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary">ISBN番号</th>
+        <td><%= @stock.catalog.isbn %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary">資料名</th>
+        <td><%= @stock.catalog.title %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary">入荷年月日</th>
+        <td><%= @stock.arrival_date %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary"><%= f.label :disposal_date, '廃棄年月日' %></th>
+        <td><%= f.date_select :disposal_date, start_year: 1950, end_year: Time.now.year, include_blank: true %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary"><%= f.label :remarks, '備考' %></th>
+        <td><%= f.text_field :remarks, size: 100 %></td>
+    </tr>
+</table>
+<p><%= f.submit '更新する', class: "btn btn-outline-primary"%></p>
+<% end %>
+<p><%= link_to 'キャンセル', stock_path %></p>

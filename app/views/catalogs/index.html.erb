@@ -1,0 +1,66 @@
+<% @document_title = "資料目録" %>
+<div class="container-fluid py-3">
+    <div class="row"><!-- グリッド（行）-->
+        <div class="col-3"><!-- グリッド（左列）-->
+            <form class="card" action="" method="get">
+                <div class="card-header">検索フォーム</div>
+                <div class="card-body">
+                    <%= form_with url: catalogs_path, method: :get, local: true, class: "mb-3" do |f|%>
+                        <div class="form-row">
+                            <div class="form-group col-md-7 mb-3">
+                                <%= f.label :search_isbn, 'ISBN番号' %>
+                                <%= f.text_field :search_isbn, value: params[:search_isbn], class: "form-control" %>
+                            </div>
+                            <div class="form-group col-md-10 mb-3">
+                                <%= f.label :search_name, '資料名' %>
+                                <%= f.text_field :search_title, value: params[:search_title], class: "form-control" %>
+                            </div>
+                            <div class="form-group col-md-7 mb-3">
+                                <%= f.label :search_category, '分類' %>
+                                <%= f.collection_select(:search_category, Category.all, :id, lambda { |category| "#{category.code}: #{category.name}" }, { include_blank: "選択してください", selected: params[:search_category]}, { class: 'form-control' }) %>
+                            </div>
+                            <div class="form-group col-md-7 mb-3">
+                                <%= f.check_box :recent_publication, { checked: params[:recent_publication] == '1', class: 'form-check-input'}, '1', '0' %>
+                                <%= f.label :recent_publication, '新刊本', class: 'form-check-label' %>
+                            </div>
+                        </div>                         
+                </div>
+                <div class="card-footer d-flex justify-content-around">
+                        <%= f.submit '検索する', name: nil, class: "btn btn-primary btn-fullwidth btn-margin" %>
+                        <%= link_to 'クリア', catalogs_path, class: "btn btn-secondary btn-fullwidth"%>
+                </div>
+                <% end %>
+            </form>
+        </div>
+        <div class="col-9"><!-- グリッド（右列）-->
+            <div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
+                <h1 class="h3">資料目録一覧</h1>
+                <%= button_to '新規登録', new_catalog_path, method: :get, class: "btn btn-sm btn-outline-primary"%>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ISBN番号</th><th>資料名</th><th>分類</th><th>著者</th><th>出版社</th><th>出版日</th><th>資料数</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        <% @catalogs.each do |c| %>
+                        <tr>
+                            <td><%= link_to c.isbn, catalog_path(c) %></td>
+                            <td><%= c.title %></td>
+                            <td><%= c.category.code %>: <%= c.category.name %></td>
+                            <td><%= c.author %></td>
+                            <td><%= c.publisher %></td>
+                            <td><%= c.publish_date %></td>
+                            <td><%= link_to c.stocks.count, stocks_path(catalog_id: c.id) %></td>
+                        </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+                <%= paginate @catalogs, theme: 'bootstrap-5' %>
+            </div>
+        </div>
+    </div>
+</div>
+

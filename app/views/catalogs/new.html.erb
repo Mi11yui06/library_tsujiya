@@ -1,0 +1,34 @@
+<% @document_title = "資料目録登録" %>
+<div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
+    <h1 class="h3">資料目録登録</h1>
+</div>
+<%= form_with model: @catalog do |f|%>
+<table class="table table-bordered border-dark">
+    <tr>
+        <th class="table-secondary" style="width: 20%"><%= f.label :isbn, 'ISBN番号' %><span style="color: red;">*</span></th>
+        <td><%= f.text_field :isbn %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary"><%= f.label :title, '資料名' %><span style="color: red;">*</span></th>
+        <td><%= f.text_field :title, size: 50 %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary"><%= f.label :category_id, '分類名' %><span style="color: red;">*</span></th>
+        <td><%= f.collection_select :category_id, @categories, :id, lambda { |category| "#{category.code}: #{category.name}" }, include_blank: true %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary"><%= f.label :author, '著者' %><span style="color: red;">*</span></th>
+        <td><%= f.text_field :author, size: 50 %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary"><%= f.label :publisher, '出版社' %><span style="color: red;">*</span></th>
+        <td><%= f.text_field :publisher, size: 50 %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary"><%= f.label :publish_date, '出版日' %><span style="color: red;">*</span></th>
+        <td><%= f.date_select :publish_date, start_year: 1850, end_year: Time.now.year %></td>
+    </tr>
+</table>
+<p><%= f.submit '登録する', class: "btn btn-outline-primary"%></p>
+<% end %>
+<p><%= link_to 'キャンセル', catalogs_path %></p>

@@ -6,6 +6,7 @@ class Member < ApplicationRecord
               format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
               uniqueness: { case_sensitive: false }
   validates :post_code, presence: true, format: { with: /\A\d{7}\z/ }
+  has_many :loans
 
   private
   def format_post_code

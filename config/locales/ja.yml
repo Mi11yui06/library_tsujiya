@@ -4,6 +4,21 @@ ja:
       admin:
         email: メールアドレス
         password: パスワード
+      member:
+        name: 氏名
+        post_code: 郵便番号
+        address: 住所
+        email: E-mailアドレス
+        tel: 電話番号
+      catalog:
+        title: 資料名
+        author: 著者
+        publisher: 出版社
+        publish_date: 出版日
+        isbn: ISBN番号
+        category: 分類
+      stock:
+        arrival_date: 入荷年月日
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'

@@ -27,9 +27,15 @@ class StocksController < ApplicationController
 
   def create
     number_of_copies = params[:stock][:number_of_copies].to_i
+    @stock = Stock.new(stock_params)
+    @catalog = Catalog.find(params[:stock][:catalog_id]) if params[:stock][:catalog_id].present?
 
+    if number_of_copies == 0
+      @stock.errors.add(:base, "冊数を入力してください")
+      render :new, status: :unprocessable_entity and return
+    end
+    
     number_of_copies.times do
-      @stock = Stock.new(stock_params)
       unless @stock.save
         flash.now[:danger] = '登録できませんでした'
         @catalog = Catalog.find(params[:stock][:catalog_id])

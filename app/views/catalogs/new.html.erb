@@ -2,6 +2,15 @@
 <div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
     <h1 class="h3">資料目録登録</h1>
 </div>
+
+<% if @catalog.errors.any? %>
+<ul>
+    <% @catalog.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+</ul>
+<% end %>
+
 <%= form_with model: @catalog do |f|%>
 <table class="table table-bordered border-dark">
     <tr>
@@ -14,7 +23,7 @@
     </tr>
     <tr>
         <th class="table-secondary"><%= f.label :category_id, '分類名' %><span style="color: red;">*</span></th>
-        <td><%= f.collection_select :category_id, @categories, :id, lambda { |category| "#{category.code}: #{category.name}" }, include_blank: true %></td>
+        <td><%= f.collection_select :category_id, @categories, :id, :code_with_name, include_blank: true %></td>
     </tr>
     <tr>
         <th class="table-secondary"><%= f.label :author, '著者' %><span style="color: red;">*</span></th>

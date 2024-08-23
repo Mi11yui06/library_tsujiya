@@ -1,0 +1,48 @@
+<% @document_title = "新規貸出確認" %>
+<div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
+    <h1 class="h3">貸出確認画面</h1>
+</div>
+
+<p>この内容で登録しますか？</p>
+<table class="table table-bordered border-dark">
+<tr>
+    <th class="table-secondary">会員ID</th>
+    <td><%= @loan.member_id %></td>
+</tr>
+<tr>
+    <th class="table-secondary">会員名</th>
+    <td><%= @member.name %></td>
+</tr>
+<tr>
+    <th class="table-secondary">資料ID</th>
+    <td><%= @loan.stock_id %></td>
+</tr>
+<tr>
+    <th class="table-secondary">資料名</th>
+    <td>
+    <%= @stock.catalog.title %>
+    <% if @stock.new_book? %>
+        <span class="ms-2", style="color: red">※新刊</span>
+    <% end %>
+    </td>
+</tr>
+<tr>
+    <th class="table-secondary">貸出日</th>
+    <td><%= @loan.loan_date %></td>
+</tr>
+<tr>
+    <th class="table-secondary">返却期日</th>
+    <td><%= @loan.due_date %></td>
+</tr>
+</table>
+<%= form_with(model: @loan, url: loans_path, method: :post) do |f| %>
+    <%= f.hidden_field :member_id %>
+    <%= f.hidden_field :stock_id %>
+    <%= f.hidden_field :loan_date %>
+    <%= f.hidden_field :due_date %>
+<p>
+<%= f.submit '登録する', class: "btn btn-outline-primary" %>
+<%= link_to '修正する', new_loan_path(member_id: @loan.member_id, stock_id: @loan.stock_id, loan_date: @loan.loan_date), class: "btn btn-outline-secondary" %>
+</p>
+<% end %>
+<p><%= link_to 'キャンセル', loans_path %></p>

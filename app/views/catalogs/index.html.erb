@@ -17,7 +17,7 @@
                             </div>
                             <div class="form-group col-md-7 mb-3">
                                 <%= f.label :search_category, '分類' %>
-                                <%= f.collection_select(:search_category, Category.all, :id, lambda { |category| "#{category.code}: #{category.name}" }, { include_blank: "選択してください", selected: params[:search_category]}, { class: 'form-control' }) %>
+                                <%= f.collection_select(:search_category, Category.all, :id, :code_with_name, { include_blank: "選択してください", selected: params[:search_category]}, { class: 'form-control' }) %>
                             </div>
                             <div class="form-group col-md-7 mb-3">
                                 <%= f.check_box :recent_publication, { checked: params[:recent_publication] == '1', class: 'form-check-input'}, '1', '0' %>

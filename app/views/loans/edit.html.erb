@@ -1,0 +1,33 @@
+<% @document_title = "返却記録登録" %>
+<div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
+    <h1 class="h3">返却記録登録</h1>
+</div>
+<%= form_with model: @loan do |f|%>
+<table class="table table-bordered border-dark">
+    <tr>
+        <th class="table-secondary" style="width: 20%">会員ID</span></th>
+        <td><%= @loan.member_id %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary">資料ID</span></th>
+        <td><%= @loan.stock_id %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary">貸出年月日</span></th>
+        <td><%= @loan.loan_date %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary">返却期日</span></th>
+        <td><%= @loan.due_date %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary"><%= f.label :return_date, '返却年月日' %><span style="color: red;"></span></th>
+        <td><%= f.date_select :return_date, size: 50, start_year: 2010, end_year: Time.now.year, default: Date.today, include_blank: true %></td>
+    </tr>
+        <th class="table-secondary"><%= f.label :remarks, '備考' %></th>
+        <td><%= f.text_field :remarks, size: 100 %></td>
+    </tr>
+</table>
+<p><%= f.submit '登録する', class: "btn btn-outline-primary"%></p>
+<% end %>
+<p><%= link_to 'キャンセル', loan_path(@loan) %></p>

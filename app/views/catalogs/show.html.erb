@@ -13,8 +13,8 @@
         <td><%= @catalog.title %></td>
     </tr>
     <tr>
-        <th class="table-secondary">分類コード</th>
-        <td><%= @catalog.category.code %></td>
+        <th class="table-secondary">分類</th>
+        <td><%= @catalog.category.code %>: <%= @catalog.category.name %></td>
     </tr>
     <tr>
         <th class="table-secondary">著者</th>
@@ -30,7 +30,7 @@
     </tr>
     <tr>
         <th class="table-secondary">資料ID</th>
-        <td><%= @catalog.stocks.where(disposal_date: nil).pluck(:id).join(", ") %></td>
+        <td><%= @catalog.stocks.pluck(:id).join(", ") %></td>
     </tr>
 </table>
 <p class="d-grid gap-2 d-md-block">

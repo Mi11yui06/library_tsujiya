@@ -2,6 +2,15 @@
 <div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
     <h1 class="h3">在庫台帳登録</h1>
 </div>
+
+<% if @stock.errors.any? %>
+<ul>
+    <% @stock.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+</ul>
+<% end %>
+
 <%= form_with model: @stock do |f|%>
 <%= f.hidden_field :catalog_id, value: params[:catalog_id] %>
 <table class="table table-bordered border-dark">

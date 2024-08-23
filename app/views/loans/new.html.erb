@@ -1,0 +1,32 @@
+<% @document_title = "新規貸出登録" %>
+<div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
+    <h1 class="h3">新規貸出登録</h1>
+</div>
+
+<% if @loan.errors.any? %>
+<ul>
+    <% @loan.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+</ul>
+<% end %>
+
+<%= form_with model: @loan, url: confirm_loans_path, method: :get do |f|%>
+<table class="table table-bordered border-dark">
+    <tr>
+        <th class="table-secondary" style="width: 20%"><%= f.label :member_id, '会員ID' %><span style="color: red;">*</span></th>
+        <td><%= f.text_field :member_id, size: 10 %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary"><%= f.label :stock_id, '資料ID' %><span style="color: red;">*</span></th>
+        <td><%= f.text_field :stock_id, size: 10 %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary"><%= f.label :loan_date, '貸出年月日' %><span style="color: red;">*</span></th>
+        <td><%= f.date_select :loan_date, size: 50, start_year: 2010, end_year: Time.now.year %></td>
+    </tr>
+</table>
+<p><%= f.submit '確認画面へ', class: "btn btn-outline-primary"%></p>
+<% end %>
+<p><%= link_to 'キャンセル', loans_path %></p>
+

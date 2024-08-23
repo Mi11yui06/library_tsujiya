@@ -1,0 +1,73 @@
+<% @document_title = "貸出台帳" %>
+<div class="container-fluid py-3">
+    <div class="row"><!-- グリッド（行）-->
+        <div class="col-3"><!-- グリッド（左列）-->
+            <form class="card" action="" method="get">
+                <div class="card-header">検索フォーム</div>
+                <div class="card-body">
+                    <%= form_with url: loans_path, method: :get, local: true, class: "mb-3" do |f|%>
+                        <div class="form-row">
+                            <div class="form-group col-md-4 mb-3">
+                                <%= f.label :search_member, '会員ID' %>
+                                <%= f.text_field :search_member, value: params[:search_member], class: "form-control" %>
+                            </div>
+                            <div class="form-group col-md-4 mb-3">
+                                <%= f.label :search_stock, '資料ID' %>
+                                <%= f.text_field :search_stock, value: params[:search_stock], class: "form-control" %>
+                            </div>
+                            <div class="form-group col-md-10 mb-3">
+                                <%= f.check_box :overdue, { checked: params[:overdue] == '1', class: 'form-check-input'}, '1', '0' %>
+                                <%= f.label :overdue, '延滞', class: 'form-check-label' %>
+                            </div>
+                        </div>                         
+                </div>
+                <div class="card-footer d-flex justify-content-around">
+                        <%= f.submit '検索する', name: nil, class: "btn btn-primary btn-fullwidth btn-margin" %>
+                        <%= link_to 'クリア', loans_path, class: "btn btn-secondary btn-fullwidth"%>
+                </div>
+                <% end %>
+            </form>
+        </div>
+        <div class="col-9"><!-- グリッド（右列）-->
+            <div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
+                <h1 class="h3">貸出台帳一覧</h1>
+            </div>
+            <% if @loan_available == 0 %>
+                <div class="alert alert-warning" role="alert">
+                <%= "#{@member.name}さんは延滞中の資料があるため貸出できません。" %>
+                </div>
+            <% elsif @member %>
+                <div class="alert alert-info" role="alert">
+                <%= "#{@member.name}さんはあと#{@loan_available}冊借りることができます。" %>
+                <%= link_to '新規貸出登録', new_loan_path(member_id: params[:search_member]), class: "btn btn-sm btn-info" %>
+                </div>
+            <% end %>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>会員ID</th><th>会員名</th><th>資料ID</th><th>貸出年月日</th><th>返却期日</th><th>超過日数</th><th>返却年月日</th><th>備考</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        <% @loans.each do |l| %>
+                        <tr>
+                            <td><%= link_to l.member_id, loan_path(l) %></td>
+                            <td><%= link_to l.member.name, member_path(l.member_id) %></td>
+                            <td><%= l.stock_id %></td>
+                            <td><%= l.loan_date %></td>
+                            <td><%= l.due_date %></td>
+                            <td><%= l.overdue_days %></td>
+                            <td><%= l.return_date %></td>
+                            <td><%= l.remarks %></td>
+                        </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+                <%= paginate @loans, theme: 'bootstrap-5' %>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,42 @@
+<% @document_title = "貸出台帳詳細" %>
+<div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
+    <h1 class="h3">貸出詳細画面</h1>
+    <%= button_to '削除する', loan_path(@loan), method: :delete, onclick: "return confirm('本当に削除しますか？')" , class: "btn btn-sm btn-outline-danger"%>
+</div>
+<table class="table table-bordered border-dark">
+    <tr>
+        <th class="table-secondary" style="width: 20%">会員ID</th>
+        <td><%= @loan.member_id %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary">会員名</th>
+        <td><%= @loan.member.name %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary">資料ID</th>
+        <td><%= @loan.stock_id %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary">資料名</th>
+        <td><%= @loan.stock.catalog.title %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary">貸出年月日</th>
+        <td><%= @loan.loan_date %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary">返却期日</th>
+        <td><%= @loan.due_date %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary">返却年月日</th>
+        <td><%= @loan.return_date %></td>
+    </tr>
+    <tr>
+        <th class="table-secondary">備考</th>
+        <td><%= @loan.remarks %></td>
+    </tr>
+</table>
+<p><%= link_to '返却登録', edit_loan_path, method: :get, class: "btn btn-sm btn-outline-primary"%></p>
+<p><%= link_to '一覧に戻る', loans_path %></p>
+

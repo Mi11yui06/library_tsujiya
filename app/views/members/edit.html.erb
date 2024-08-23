@@ -2,6 +2,15 @@
 <div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
     <h1 class="h3">会員情報編集</h1>
 </div>
+
+<% if @member.errors.any? %>
+<ul>
+    <% @member.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+</ul>
+<% end %>
+
 <%= form_with model: @member do |f|%>
 <table class="table table-bordered border-dark">
     <tr>

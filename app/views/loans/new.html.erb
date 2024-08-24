@@ -14,13 +14,20 @@
 <%= form_with model: @loan, url: confirm_loans_path, method: :get do |f|%>
 <table class="table table-bordered border-dark">
     <tr>
-        <th class="table-secondary" style="width: 20%"><%= f.label :member_id, '会員ID' %><span style="color: red;">*</span></th>
-        <td><%= f.text_field :member_id, size: 10 %></td>
+        <th class="table-secondary" style="width: 20%"><%= f.label :member_id, '会員ID' %></th>
+        <td><%= @loan.member_id %></td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :stock_id, '資料ID' %><span style="color: red;">*</span></th>
-        <td><%= f.text_field :stock_id, size: 10 %></td>
+        <th class="table-secondary" style="width: 20%"><%= f.label :member_id, '会員名' %></th>
+        <td><%= @loan.member.name %></td>
     </tr>
+        <% @loan_available ||= 0 %>
+        <% @loan_available.times do |i| %>
+    <tr>
+        <th class="table-secondary"><%= f.label "stock_ids_#{i}", '資料ID' %><%= i == 0 ? '<span style="color: red;">*</span>' : '' %></th>
+        <td><%= f.text_field "stock_ids[]", value: @loan.stock_ids[i], size: 10 %></td>
+    </tr>
+    <% end %>
     <tr>
         <th class="table-secondary"><%= f.label :loan_date, '貸出年月日' %><span style="color: red;">*</span></th>
         <td><%= f.date_select :loan_date, size: 50, start_year: 2010, end_year: Time.now.year %></td>

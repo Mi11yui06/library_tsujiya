@@ -16,6 +16,7 @@ class LoansController < ApplicationController
         on_loan = @member.loans.where("return_date IS NULL AND loan_date IS NOT NULL")
         @loan_available = [5 - on_loan.count, 0].max
       end
+      Rails.logger.debug("貸出可能冊数: #{@loan_available}")
     end
 
     @loans = @loans.where(member_id: search_member.to_i) if search_member.present?

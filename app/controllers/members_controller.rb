@@ -50,6 +50,7 @@ class MembersController < ApplicationController
   def destroy
     @member = Member.find(params[:id])
     @member.destroy
+    flash[:success] = '削除しました'
     redirect_to members_path
   end
 

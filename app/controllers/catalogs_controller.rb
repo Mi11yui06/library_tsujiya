@@ -56,6 +56,7 @@ class CatalogsController < ApplicationController
   def destroy
     @catalog = Catalog.find(params[:id])
     @catalog.destroy
+    flash[:success] = '削除しました'
     redirect_to catalogs_path
   end
 

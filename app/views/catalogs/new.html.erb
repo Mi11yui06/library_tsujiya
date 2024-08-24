@@ -22,7 +22,7 @@
         <td><%= f.text_field :title, size: 50 %></td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :category_id, '分類名' %><span style="color: red;">*</span></th>
+        <th class="table-secondary"><%= f.label :category_id, '分類' %><span style="color: red;">*</span></th>
         <td><%= f.collection_select :category_id, @categories, :id, :code_with_name, include_blank: true %></td>
     </tr>
     <tr>
@@ -35,7 +35,7 @@
     </tr>
     <tr>
         <th class="table-secondary"><%= f.label :publish_date, '出版日' %><span style="color: red;">*</span></th>
-        <td><%= f.date_select :publish_date, start_year: 1850, end_year: Time.now.year %></td>
+        <td><%= f.date_select :publish_date, start_year: 1850, end_year: Time.now.year, include_blank: true %></td>
     </tr>
 </table>
 <p><%= f.submit '登録する', class: "btn btn-outline-primary"%></p>

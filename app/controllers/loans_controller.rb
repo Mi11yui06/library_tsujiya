@@ -16,7 +16,6 @@ class LoansController < ApplicationController
         on_loan = @member.loans.where("return_date IS NULL AND loan_date IS NOT NULL")
         @loan_available = [5 - on_loan.count, 0].max
       end
-      Rails.logger.debug("貸出可能冊数: #{@loan_available}")
     end
 
     @loans = @loans.where(member_id: search_member.to_i) if search_member.present?
@@ -35,41 +34,61 @@ class LoansController < ApplicationController
       loan_date: params[:loan_date],
       due_date: params[:due_date]
     )
+    @member = Member.find_by(id: params[:member_id])
+    if @member
+      overdue_loans = @member.loans.where("return_date IS NULL AND due_date < ?", Date.today)
+      if overdue_loans.exists?
+        @loan_available = 0
+      else
+        on_loan = @member.loans.where("return_date IS NULL AND loan_date IS NOT NULL")
+        @loan_available = [5 - on_loan.count, 0].max
+      end
+    end
   end
 
   def confirm
     @loan = Loan.new(loan_params)
     @member = Member.find_by(id: @loan.member_id)
-    @stock = Stock.find_by(id: @loan.stock_id)
     
-    # 会員IDの検証
-    if @loan.member_id.blank?
-      @loan.errors.add(:base, "会員IDを入力してください")
-    elsif @member.nil?
-      @loan.errors.add(:base, "指定された会員IDは存在しません")
-    elsif @member.remove_date.present?
-      @loan.errors.add(:base, "指定された会員は退会しています")
-    elsif member_overdue?(@member)
-      @loan.errors.add(:base, "指定された会員は延滞中です")
-    end
-
-    # 資料IDの検証
-    if @loan.stock_id.blank?
-      @loan.errors.add(:base, "資料IDを入力してください")
-    elsif @stock.nil?
-      @loan.errors.add(:base, "指定された資料IDは存在しません")
-    elsif @stock.disposal_date.present?
-      @loan.errors.add(:base, "指定された資料は廃棄されています")
-    elsif Loan.exists?(stock_id: @loan.stock_id, return_date: nil)
-      @loan.errors.add(:base, "指定された資料は貸出中です")
-    end
+    @stocks = []
+    @due_dates = []
 
     if @loan.errors.any?
       render :new, status: :unprocessable_entity
     else
-      @loan.set_due_date if @loan.loan_date.present?
-      render :confirm
+      # 必要な資料IDとその対応する返却期限を取得
+      stock_ids = params[:loan][:stock_ids]
+      stock_ids.each do |stock_id|
+        stock = Stock.find_by(id: stock_id)
+        if stock.nil?
+          @loan.errors.add(:base, "指定された資料ID #{stock_id} は存在しません")
+        elsif stock.disposal_date.present?
+          @loan.errors.add(:base, "指定された資料ID #{stock_id} は廃棄されています")
+        elsif Loan.exists?(stock_id: stock.id, return_date: nil)
+          @loan.errors.add(:base, "指定された資料ID #{stock_id} は貸出中です")
+        else
+          @stocks << stock
+          @due_dates << @loan.set_due_date # set_due_dateメソッドが返却期限を返すようにしておく
+        end
+      end
+  
+      if @loan.errors.any?
+        render :new, status: :unprocessable_entity
+      else
+        render :confirm
+      end
     end
+    
+      # 会員IDの検証
+      # if @loan.member_id.blank?
+      #   @loan.errors.add(:base, "会員IDを入力してください")
+      # elsif @member.nil?
+      #   @loan.errors.add(:base, "指定された会員IDは存在しません")
+      # elsif @member.remove_date.present?
+      #   @loan.errors.add(:base, "指定された会員は退会しています")
+      # elsif member_overdue?(@member)
+      #   @loan.errors.add(:base, "指定された会員は延滞中です")
+      # end
   end
 
   def create

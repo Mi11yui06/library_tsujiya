@@ -4,47 +4,41 @@
 </div>
 
 <p>この内容で登録しますか？</p>
-<table class="table table-bordered border-dark">
-    <tr>
-        <th class="table-secondary" style="width: 20%">会員ID</th>
-        <td><%= @loan.member_id %></td>
-    </tr>
-    <tr>
-        <th class="table-secondary" style="width: 20%">会員名</th>
-        <td><%= @loan.member.name %></td>
-    </tr>
-    <tr>
-        <th class="table-secondary" style="width: 20%">貸出年月日</th>
-        <td><%= @loan.loan_date %></td>
-    </tr>
-
-
-    <% @loan_available.times do |i| %>
+<%= form_with model: @loan, url: loans_path, method: :post do |f| %>
+    <table class="table table-bordered border-dark">
         <tr>
-            <th class="table-secondary"><%= "資料ID ##{i + 1}" %></th>
-            <td><%= @stocks[i].id %></td>
+            <th class="table-secondary" style="width: 20%">会員ID</th>
+            <td><%= @loan.member_id %></td>
         </tr>
         <tr>
-            <th class="table-secondary"><%= "資料名 ##{i + 1}" %></th>
-            <td><%= @stocks[i].name %></td>
+            <th class="table-secondary" style="width: 20%">会員名</th>
+            <td><%= @loan.member.name %></td>
         </tr>
         <tr>
-            <th class="table-secondary"><%= "返却期限 ##{i + 1}" %></th>
+            <th class="table-secondary" style="width: 20%">貸出年月日</th>
+            <td><%= @loan.loan_date %></td>
+        </tr>
+    </table>
+
+    <table class="table table-bordered border-dark">
+        <tr>
+            <th class="table-secondary" style="width: 20%">資料ID</th>
+            <th class="table-secondary"style="width: 60%">資料名</th>
+            <th class="table-secondary">返却期日</th>
+        </tr>
+        <% @stocks.each_with_index do |stock, i| %>
+        <tr>
+            <td><%= stock.id %></td>
+            <td><%= stock.title %></td>
             <td><%= @due_dates[i] %></td>
         </tr>
-    <% end %>
-</table>
-
-<p><%= form_with model: @loan, url: loans_path, method: :post do |f| %>
+        <% end %>  
+    </table>
     <%= f.hidden_field :member_id %>
     <%= f.hidden_field :loan_date %>
     
-    <% @loan_available.times do |i| %>
-        <%= f.hidden_field "stock_ids[]", value: @stocks[i].id %>
-        <%= f.hidden_field "due_dates[]", value: @due_dates[i] %>
-    <% end %>
-    
-    <%= f.submit '貸出を確定する', class: "btn btn-outline-primary" %>
-<% end %></p>
+    <p><%= f.submit '登録する', class: "btn btn-outline-primary" %>
+    <%= link_to '編集する', new_loan_path(member_id: @member.id, stock_ids: params[:loan][:stock_ids], loan_date: @loan.loan_date), class: "btn btn-outline-secondary" %></p>
+<% end %>
 
-<p><%= link_to 'キャンセル', new_loan_path %></p>
+<p><%= link_to 'キャンセル', loans_path %></p>

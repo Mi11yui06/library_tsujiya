@@ -1,41 +1,81 @@
 <% @document_title = '図書管理システム' %>
-<div class="mb-3">
-    <div class="card">
-        <div class="card-header">会員台帳管理</div>
-        <div class="card-body">
-            <%= link_to '会員台帳', members_path %><br>
+
+<div class="container mt-4">
+    <!-- 貸出・返却・新規予約 -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header bg-primary text-white">貸出</div>
+                <div class="card-body">
+                    <p>新規貸出を登録します。</p>
+                    <%= link_to '新規貸出登録', new_loan_path, class: "btn btn-lg btn-primary" %>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header bg-success text-white">返却</div>
+                <div class="card-body">
+                    <p>返却処理を行います。</p>
+                    <%= link_to '返却処理', new_loan_path, class: "btn btn-lg btn-success" %>
+                </div>
+            </div>
+        </div>
+<% 
+=begin %>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header bg-warning text-white">新規予約</div>
+                <div class="card-body">
+                    <p>新規予約を登録します。</p>
+                    <%= link_to '新規予約登録', new_reservation_path, class: "btn btn-lg btn-warning" %>
+                </div>
+            </div>
+        </div>
+<% 
+=end %>
+    </div>
+
+    <!-- 管理機能: 会員管理、資料目録管理、在庫管理 -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header">会員台帳管理</div>
+                <div class="card-body">
+                    <%= link_to '会員台帳管理', members_path, class: "btn btn-sm btn-outline-primary" %>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header">資料目録管理</div>
+                <div class="card-body">
+                    <%= link_to '資料目録管理', catalogs_path, class: "btn btn-sm btn-outline-primary" %>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header">在庫管理</div>
+                <div class="card-body">
+                    <%= link_to '在庫管理', stocks_path, class: "btn btn-sm btn-outline-primary" %>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-<div class="mb-3">
-    <div class="card">
-        <div class="card-header">資料目録管理</div>
-        <div class="card-body">
-            <%= link_to '資料目録', catalogs_path %><br>
+<% 
+=begin %>
+    <!-- 延滞対応 -->
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <div class="card text-center">
+                <div class="card-header bg-danger text-white">延滞対応</div>
+                <div class="card-body">
+                    <%= link_to '延滞資料一覧', overdue_items_path, class: "btn btn-danger" %>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-<div class="mb-3">
-    <div class="card">
-        <div class="card-header">在庫管理</div>
-        <div class="card-body">
-            <%= link_to '在庫台帳', stocks_path %><br>
-        </div>
-    </div>
-</div>
-<div class="mb-3">
-    <div class="card">
-        <div class="card-header">貸出管理</div>
-        <div class="card-body">
-            <%= link_to '貸出台帳', loans_path %><br>
-        </div>
-    </div>
-</div>
-<div class="mb-3">
-    <div class="card">
-        <div class="card-header">延滞対応</div>
-        <div class="card-body">
-            資料一覧<br>
-        </div>
-    </div>
+<% 
+=end %>
 </div>

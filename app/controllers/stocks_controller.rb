@@ -36,6 +36,7 @@ class StocksController < ApplicationController
     end
     
     number_of_copies.times do
+      @stock = Stock.new(stock_params)
       unless @stock.save
         flash.now[:danger] = '登録できませんでした'
         @catalog = Catalog.find(params[:stock][:catalog_id])

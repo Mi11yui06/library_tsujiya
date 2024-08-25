@@ -47,6 +47,8 @@ class LoansController < ApplicationController
   end
 
   def confirm
+    logger.debug("Params: #{params.inspect}")
+
     @loan = Loan.new(loan_params)
     @member = Member.find_by(id: @loan.member_id)
 
@@ -64,7 +66,12 @@ class LoansController < ApplicationController
     @due_dates = []
     @stock_errors = []
 
-    stock_ids = params[:loan][:stock_ids].reject(&:blank?)
+    logger.debug("Loan object: #{@loan.inspect}")
+    logger.debug("Stock IDs: #{params[:loan][:stock_ids].inspect}")
+
+    stock_ids = params[:loan][:stock_ids]&.reject(&:blank?) || []
+    logger.debug("Filtered Stock IDs: #{stock_ids.inspect}")
+
     if stock_ids.empty?
       @loan.errors.add(:base, "少なくとも1冊の資料IDが必要です")
       render :new, status: :unprocessable_entity
@@ -72,6 +79,7 @@ class LoansController < ApplicationController
     end
 
     stock_ids.each_with_index do |stock_id, i|
+      @stock_errors[i] ||= []
       stock = Stock.find_by(id: stock_id)
       if stock.nil?
         @stock_errors[i]<< "資料ID: #{stock_id} は存在しません"
@@ -85,8 +93,14 @@ class LoansController < ApplicationController
       end
     end
 
-    if @stock_errors.any? { |error| error.present? } || @loan.loan_date.blank?
-      @loan.errors.add(:base, "貸出年月日を入力してください") if @loan.loan_date.blank?
+    logger.debug("Stocks: #{@stocks.inspect}")
+    logger.debug("Due Dates: #{@due_dates.inspect}")
+    logger.debug("Stock Errors: #{@stock_errors.inspect}")
+
+    if @stock_errors.any? || @loan.loan_date.blank?
+      if @loan.loan_date.blank?
+        @loan.errors.add(:base, "貸出年月日を入力してください")
+      end
       render :new, status: :unprocessable_entity
     else
       render :confirm

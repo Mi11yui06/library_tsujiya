@@ -14,6 +14,7 @@ class Loan < ApplicationRecord
         self.due_date = self.loan_date + 15.days
       end
     end
+    self.due_date
   end
 
   def overdue_days

@@ -34,9 +34,9 @@
             <%= raw(i == 0 ? '<span style="color: red;">*</span>' : '') %>
         </th>
         <td>
-        <%= f.text_field "stock_ids[]", size: 10 %>
+        <%= text_field_tag "loan[stock_ids][]",(params[:loan][:stock_ids][i] rescue nil), size: 10 %>
         <% if @stock_errors.present? && @stock_errors[i].present? %>
-        <div class="text-danger"><%= @stock_errors[i] %></div>
+        <div class="text-danger"><%= @stock_errors[i].join(", ") %></div>
         <% end %>
         </td>
     </tr>

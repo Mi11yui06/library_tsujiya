@@ -31,17 +31,8 @@
         <div class="col-9"><!-- グリッド（右列）-->
             <div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
                 <h1 class="h3">貸出台帳一覧</h1>
+                <%= button_to '新規貸出', new_loan_path, method: :get, class: "btn btn-sm btn-outline-primary"%>
             </div>
-            <% if @loan_available == 0 %>
-                <div class="alert alert-warning" role="alert">
-                <%= "#{@member.name}さんは延滞中の資料があるため貸出できません。" %>
-                </div>
-            <% elsif @member %>
-                <div class="alert alert-info" role="alert">
-                <%= "#{@member.name}さんはあと#{@loan_available}冊借りることができます。" %>
-                <%= link_to '新規貸出登録', new_loan_path(member_id: params[:search_member]), class: "btn btn-sm btn-info" %>
-                </div>
-            <% end %>
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>

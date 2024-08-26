@@ -47,11 +47,12 @@ class LoansController < ApplicationController
   end
 
   def confirm
-    logger.debug("Params: #{params.inspect}")
-
     @loan = Loan.new(loan_params)
     @member = Member.find_by(id: @loan.member_id)
+    @stock = Stock.find_by(id: @loan.stock_id)
 
+    @loan.set_due_date
+    
     if @member
       overdue_loans = @member.loans.where("return_date IS NULL AND due_date < ?", Date.today)
       if overdue_loans.exists?
@@ -62,47 +63,34 @@ class LoansController < ApplicationController
       end
     end
 
-    @stocks = []
-    @due_dates = []
-    @stock_errors = []
-
-    logger.debug("Loan object: #{@loan.inspect}")
-    logger.debug("Stock IDs: #{params[:loan][:stock_ids].inspect}")
-
-    stock_ids = params[:loan][:stock_ids]&.reject(&:blank?) || []
-    logger.debug("Filtered Stock IDs: #{stock_ids.inspect}")
-
-    if stock_ids.empty?
-      @loan.errors.add(:base, "少なくとも1冊の資料IDが必要です")
-      render :new, status: :unprocessable_entity
-      return
+    if @loan.stock_id.blank?
+      @loan.errors.add(:base, "資料IDを入力してください")
+    elsif @stock.nil?
+      @loan.errors.add(:base, "指定された資料は存在しません")
+    elsif @stock.disposal_date.present?
+      @loan.errors.add(:base, "指定された資料は廃棄されています")
+    elsif Loan.exists?(stock_id: @loan.stock_id, return_date: nil)
+      @loan.errors.add(:base, "指定された資料は貸出中です")
     end
 
-    stock_ids.each_with_index do |stock_id, i|
-      @stock_errors[i] ||= []
-      stock = Stock.find_by(id: stock_id)
-      if stock.nil?
-        @stock_errors[i]<< "資料ID: #{stock_id} は存在しません"
-      elsif stock.disposal_date.present?
-        @stock_errors[i] << "資料ID: #{stock_id} は廃棄されています"
-      elsif Loan.exists?(stock_id: stock.id, return_date: nil)
-        @stock_errors[i] << "資料ID: #{stock_id} は貸出中です"
-      else
-        @stocks << stock
-        @due_dates << @loan.set_due_date 
-      end
+    if @loan.member_id.blank?
+      @loan.errors.add(:base, "会員IDを入力してください")
+    elsif @member.nil?
+      @loan.errors.add(:base, "指定された会員は存在しません")
+    elsif @member.remove_date.present?
+      @loan.errors.add(:base, "指定された会員は退会しています")
+    elsif member_overdue?(@member)
+      @loan.errors.add(:base, "指定された会員は延滞中です")
     end
 
-    logger.debug("Stocks: #{@stocks.inspect}")
-    logger.debug("Due Dates: #{@due_dates.inspect}")
-    logger.debug("Stock Errors: #{@stock_errors.inspect}")
-
-    if @stock_errors.any? || @loan.loan_date.blank?
-      if @loan.loan_date.blank?
-        @loan.errors.add(:base, "貸出年月日を入力してください")
-      end
+    if @loan.loan_date.blank?
+      @loan.errors.add(:base, "貸出年月日を入力してください")
+    end
+    
+    if @loan.errors.any?
       render :new, status: :unprocessable_entity
     else
+      @due_date = @loan.due_date
       render :confirm
     end
   end
@@ -110,6 +98,17 @@ class LoansController < ApplicationController
   def create
     @loan = Loan.new(loan_params)
 
+    if @loan.save
+      flash[:success] = '新規貸出を登録しました'
+      redirect_to @loan
+    else
+      flash.now[:danger] = '登録できませんでした'
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def create
+    @loan = Loan.new(loan_params)
     if @loan.save
       flash[:success] = '新規貸出を登録しました'
       redirect_to @loan

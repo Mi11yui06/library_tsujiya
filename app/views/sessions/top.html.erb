@@ -8,7 +8,13 @@
                 <div class="card-header bg-primary text-white">貸出</div>
                 <div class="card-body">
                     <p>新規貸出を登録します。</p>
-                    <%= link_to '新規貸出登録', new_loan_path, class: "btn btn-lg btn-primary" %>
+                    <%= form_with url: loans_path(member_id: params[:member_id]), method: :get, local: true do |form| %>
+                    <div class="form-group mb-4">
+                        <%= form.label :member_id, "会員ID" %>
+                        <%= form.text_field :member_id, class: "form-control" %>
+                    </div>
+                    <%= form.submit "貸出登録", class: "btn btn-primary" %>
+                    <% end %>
                 </div>
             </div>
         </div>

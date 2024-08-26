@@ -12,33 +12,36 @@
         </tr>
         <tr>
             <th class="table-secondary" style="width: 20%">会員名</th>
-            <td><%= @loan.member.name %></td>
+            <td><%= @member.name %></td>
+        </tr>
+        <tr>
+            <th class="table-secondary" style="width: 20%">資料ID</th>
+            <td><%= @loan.stock_id %></td>
+        </tr>
+        <tr>
+            <th class="table-secondary" style="width: 20%">資料名</th>
+            <td>
+                <%= @stock.catalog.title %>
+                <% if @stock.new_book? %>
+                <span style="color: red;">※新刊</span>
+                <% end %>
+            </td>
         </tr>
         <tr>
             <th class="table-secondary" style="width: 20%">貸出年月日</th>
             <td><%= @loan.loan_date %></td>
         </tr>
-    </table>
-
-    <table class="table table-bordered border-dark">
         <tr>
-            <th class="table-secondary" style="width: 20%">資料ID</th>
-            <th class="table-secondary"style="width: 60%">資料名</th>
-            <th class="table-secondary">返却期日</th>
+            <th class="table-secondary" style="width: 20%">返却期日</th>
+            <td><%= @loan.due_date %></td>
         </tr>
-        <% @stocks.each_with_index do |stock, i| %>
-        <tr>
-            <td><%= stock.id %></td>
-            <td><%= stock.title %></td>
-            <td><%= @due_dates[i] %></td>
-        </tr>
-        <% end %>  
     </table>
     <%= f.hidden_field :member_id %>
+    <%= f.hidden_field :stock_id %>
     <%= f.hidden_field :loan_date %>
-    
+    <%= f.hidden_field :due_date %>
     <p><%= f.submit '登録する', class: "btn btn-outline-primary" %>
-    <%= link_to '編集する', new_loan_path(member_id: @member.id, stock_ids: params[:loan][:stock_ids], loan_date: @loan.loan_date), class: "btn btn-outline-secondary" %></p>
+    <%= link_to '編集する', new_loan_path(member_id: @member.id, stock_id: @stock.id, loan_date: @loan.loan_date), class: "btn btn-outline-secondary" %></p>
 <% end %>
 
 <p><%= link_to 'キャンセル', loans_path %></p>

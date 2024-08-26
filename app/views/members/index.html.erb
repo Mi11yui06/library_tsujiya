@@ -38,9 +38,9 @@
                     </thead>
                     <tbody class="table-group-divider">
                         <% @members.each do |m| %>
-                        <tr>
+                        <tr style="cursor: pointer;" onclick="window.location='<%= member_path(m) %>';">
                             <td><%= m.id %></td>
-                            <td><%= link_to m.name, member_path(m) %></td>
+                            <td><%= m.name %></td>
                             <td><%= m.post_code %></td>
                             <td><%= m.address %></td>
                             <td><%= m.tel %></td>

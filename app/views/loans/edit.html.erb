@@ -1,6 +1,6 @@
-<% @document_title = "返却記録登録" %>
+<% @document_title = "貸出記録編集" %>
 <div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
-    <h1 class="h3">返却記録登録</h1>
+    <h1 class="h3">貸出記録編集</h1>
 </div>
 <%= form_with model: @loan do |f|%>
 <table class="table table-bordered border-dark">
@@ -13,21 +13,21 @@
         <td><%= @loan.stock_id %></td>
     </tr>
     <tr>
-        <th class="table-secondary">貸出年月日</span></th>
-        <td><%= @loan.loan_date %></td>
+        <th class="table-secondary"><%= f.label :loan_date, '貸出年月日' %></span></th>
+        <td><%= f.date_select :loan_date, start_year: 2010, end_year: Time.now.year %></td>
     </tr>
     <tr>
-        <th class="table-secondary">返却期日</span></th>
-        <td><%= @loan.due_date %></td>
+        <th class="table-secondary"><%= f.label :due_date, '返却期日' %></span></th>
+        <td><%= f.date_select :due_date, start_year: 2010, end_year: Time.now.year %></td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :return_date, '返却年月日' %><span style="color: red;"></span></th>
-        <td><%= f.date_select :return_date, size: 50, start_year: 2010, end_year: Time.now.year, default: Date.today, include_blank: true %></td>
+        <th class="table-secondary"><%= f.label :return_date, '返却年月日' %></th>
+        <td><%= f.date_select :return_date, start_year: 2010, end_year: Time.now.year, include_blank: true, selected: Date.today %></td>
     </tr>
         <th class="table-secondary"><%= f.label :remarks, '備考' %></th>
         <td><%= f.text_field :remarks, size: 100 %></td>
     </tr>
 </table>
-<p><%= f.submit '登録する', class: "btn btn-outline-primary"%></p>
+<p><%= f.submit '更新する', class: "btn btn-outline-primary"%></p>
 <% end %>
 <p><%= link_to 'キャンセル', loan_path(@loan) %></p>

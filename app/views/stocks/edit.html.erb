@@ -31,7 +31,7 @@
     </tr>
     <tr>
         <th class="table-secondary"><%= f.label :disposal_date, '廃棄年月日' %></th>
-        <td><%= f.date_select :disposal_date, start_year: 1950, end_year: Time.now.year, include_blank: true %></td>
+        <td><%= f.date_select :disposal_date, start_year: 1950, end_year: Time.now.year, include_blank: true, selected: Date.today %></td>
     </tr>
     <tr>
         <th class="table-secondary"><%= f.label :remarks, '備考' %></th>

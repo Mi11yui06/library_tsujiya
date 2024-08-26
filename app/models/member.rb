@@ -8,6 +8,17 @@ class Member < ApplicationRecord
   validates :post_code, presence: true, format: { with: /\A\d{7}\z/ }
   has_many :loans
 
+  # 会員が延滞しているかどうか
+  def overdue?
+    loans.where("return_date IS NULL AND due_date < ?", Date.today).exists?
+  end
+
+  # 会員が今貸出できる冊数
+  def available_loans_count
+    return 0 if overdue?
+    [5 - loans.where("return_date IS NULL").count, 0].max
+  end
+  
   private
   def format_post_code
     if post_code.present?

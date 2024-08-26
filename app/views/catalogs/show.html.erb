@@ -38,3 +38,33 @@
     <%= link_to '在庫を登録する', new_stock_path(catalog_id: @catalog.id), method: :get, class: "btn btn-sm btn-outline-success" %>
 </p>
 <p><%= link_to '一覧に戻る', catalogs_path %></p>
+
+<h4>在庫一覧</h4>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>資料ID</th><th>ISBN番号</th><th>資料名</th><th>入荷年月日</th><th>廃棄年月日</th><th>備考</th><th>貸出状況</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        <% @stocks.each do |s| %>
+        <tr style="cursor: pointer;" onclick="window.location='<%= stock_path(s) %>';">
+            <td><%= s.id %></td>
+            <td><%= s.catalog.isbn %></td>
+            <td><%= s.catalog.title %></td>
+            <td><%= s.arrival_date %></td>
+            <td><%= s.disposal_date %></td>
+            <td><%= s.remarks %></td>
+            <td>
+                <% if s.discarded? %>
+                -
+                <% elsif s.currently_on_loan? %>
+                貸出中
+                <% else %>
+                貸出可
+                <% end %>
+            </td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>

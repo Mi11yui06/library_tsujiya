@@ -7,13 +7,22 @@ class StocksController < ApplicationController
     search_id = params[:search_id]
     search_isbn = params[:search_isbn]
     search_title = params[:search_title]
-
+    
     @stocks = @stocks.where(catalog_id: params[:catalog_id]) if params[:catalog_id].present?
     @stocks = @stocks.where(id: search_id.to_i) if search_id.present?
     @stocks = @stocks.where('catalogs.isbn = ?', search_isbn) if search_isbn.present?
     @stocks = @stocks.where('catalogs.title LIKE ?', "%#{search_title}%") if search_title.present?
+    
+    case params[:status]
+    when 'on_loan'
+      @stocks = @stocks.joins(:loans).where(loans: { return_date: nil }).distinct
+    when 'available'
+      @stocks = @stocks.left_joins(:loans).where(loans: { id: nil }).where(disposal_date: nil)
+    when 'discarded'
+      @stocks = @stocks.where.not(disposal_date: nil)
+    end
   end
-
+  
   def show
     @stock = Stock.find(params[:id])
   end

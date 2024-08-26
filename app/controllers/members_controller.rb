@@ -11,6 +11,7 @@ class MembersController < ApplicationController
     # 検索条件を適用
     @members = @members.where(id: search_id.to_i) if search_id.present?
     @members = @members.where('name LIKE ?', "%#{search_name}%") if search_name.present?
+    @members = @members.where.not(remove_date: nil) if params[:removed_member].to_i == 1
   end
 
   def show

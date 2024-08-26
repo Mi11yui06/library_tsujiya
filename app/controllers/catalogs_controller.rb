@@ -7,9 +7,13 @@ class CatalogsController < ApplicationController
     search_title = params[:search_title]
     search_isbn = params[:search_isbn]
     search_category = params[:search_category]
+    search_author = params[:search_author]
+    seach_publisher = params[:search_publisher]
 
     @catalogs = @catalogs.where(isbn: search_isbn.to_i) if search_isbn.present?
     @catalogs = @catalogs.where('title LIKE ?', "%#{search_title}%") if search_title.present?
+    @catalogs = @catalogs.where('author LIKE ?', "%#{search_author}%") if search_author.present?
+    @catalogs = @catalogs.where('publisher LIKE ?', "%#{seach_publisher}%") if seach_publisher.present?
     @catalogs = @catalogs.where(category_id: search_category) if search_category.present?
     @catalogs = @catalogs.where('publish_date >= ?', 3.months.ago.to_date) if params[:recent_publication].to_i == 1
 
@@ -17,6 +21,7 @@ class CatalogsController < ApplicationController
 
   def show
     @catalog = Catalog.find(params[:id])
+    @stocks = Stock.where(catalog_id: @catalog.id)
   end
 
   def new

@@ -15,6 +15,10 @@
                                 <%= f.label :search_name, '氏名' %>
                                 <%= f.text_field :search_name, value: params[:search_name], class: "form-control" %>
                             </div>
+                            <div class="form-group col-md-10 mb-3">
+                                <%= f.check_box :removed_member, { checked: params[:removed_member] == '1', class: 'form-check-input'}, '1', '0' %>
+                                <%= f.label :removed_member, '退会済み', class: 'form-check-label' %>
+                            </div>
                         </div>                         
                 </div>
                 <div class="card-footer d-flex justify-content-around">

@@ -34,5 +34,5 @@
 # Stock.create(catalog_id: 2, arrival_date: "2015-10-18", disposal_date: "", remarks: "")
 # Stock.create(catalog_id: 2, arrival_date: "2015-10-18", disposal_date: "", remarks: "")
 
-Loan.create(member_id: 4, stock_id: 5, loan_date: "2024-08-10", due_date: "2024-08-25", return_date: "", remarks: "")
-Loan.create(member_id: 2, stock_id: 1, loan_date: "2024-08-01", due_date: "2024-08-16", return_date: "2024-08-20", remarks: "")
+# Loan.create(member_id: 4, stock_id: 5, loan_date: "2024-08-10", due_date: "2024-08-25", return_date: "", remarks: "")
+# Loan.create(member_id: 2, stock_id: 1, loan_date: "2024-08-01", due_date: "2024-08-16", return_date: "2024-08-20", remarks: "")

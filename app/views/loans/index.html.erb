@@ -19,6 +19,10 @@
                                 <%= f.check_box :overdue, { checked: params[:overdue] == '1', class: 'form-check-input'}, '1', '0' %>
                                 <%= f.label :overdue, '延滞', class: 'form-check-label' %>
                             </div>
+                            <div class="form-group col-md-10 mb-3">
+                                <%= f.check_box :on_loan, { checked: params[:on_loan] == '1', class: 'form-check-input'}, '1', '0' %>
+                                <%= f.label :on_loan, '貸出中', class: 'form-check-label' %>
+                            </div>
                         </div>                         
                 </div>
                 <div class="card-footer d-flex justify-content-around">
@@ -42,9 +46,9 @@
                     </thead>
                     <tbody class="table-group-divider">
                         <% @loans.each do |l| %>
-                        <tr>
-                            <td><%= link_to l.member_id, loan_path(l) %></td>
-                            <td><%= link_to l.member.name, member_path(l.member_id) %></td>
+                        <tr style="cursor: pointer;" onclick="window.location='<%= loan_path(l) %>';">
+                            <td><%= l.member_id %></td>
+                            <td><%= l.member.name %></td>
                             <td><%= l.stock_id %></td>
                             <td><%= l.loan_date %></td>
                             <td><%= l.due_date %></td>

@@ -10,7 +10,7 @@
     </tr>
     <tr>
         <th class="table-secondary">会員名</th>
-        <td><%= @loan.member.name %></td>
+        <td><%= link_to @loan.member.name, member_path(@loan.member)  %></td>
     </tr>
     <tr>
         <th class="table-secondary">資料ID</th>
@@ -18,7 +18,12 @@
     </tr>
     <tr>
         <th class="table-secondary">資料名</th>
-        <td><%= @loan.stock.catalog.title %></td>
+        <td>
+            <%= @loan.stock.catalog.title %>
+            <% if @loan.stock.new_book? %>
+                <span style="color: red;">※新刊</span>
+            <% end %>
+        </td>
     </tr>
     <tr>
         <th class="table-secondary">貸出年月日</th>
@@ -37,6 +42,6 @@
         <td><%= @loan.remarks %></td>
     </tr>
 </table>
-<p><%= link_to '返却登録', edit_loan_path, method: :get, class: "btn btn-sm btn-outline-primary"%></p>
+<p><%= link_to '編集する', edit_loan_path, method: :get, class: "btn btn-sm btn-outline-primary"%></p>
 <p><%= link_to '一覧に戻る', loans_path %></p>
 

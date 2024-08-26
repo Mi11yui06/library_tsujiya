@@ -9,18 +9,13 @@ class LoansController < ApplicationController
 
     @member = Member.find_by(id: search_member)
     if @member
-      overdue_loans = @member.loans.where("return_date IS NULL AND due_date < ?", Date.today)
-      if overdue_loans.exists?
-        @loan_available = 0
-      else
-        on_loan = @member.loans.where("return_date IS NULL AND loan_date IS NOT NULL")
-        @loan_available = [5 - on_loan.count, 0].max
-      end
+      @loan_available = @member.available_loans_count
     end
 
     @loans = @loans.where(member_id: search_member.to_i) if search_member.present?
     @loans = @loans.where(stock_id: search_stock.to_i) if search_stock.present?
-    @loans = @loans.where("due_date <= ? AND return_date IS NULL", 1.days.ago) if params[:overdue].to_i == 1
+    @loans = @loans.where("due_date < ? AND return_date IS NULL", Date.today) if params[:overdue].to_i == 1
+    @loans = @loans.where(return_date: nil) if params[:on_loan].to_i == 1
   end
 
   def show
@@ -36,79 +31,26 @@ class LoansController < ApplicationController
     )
     @member = Member.find_by(id: params[:member_id])
     if @member
-      overdue_loans = @member.loans.where("return_date IS NULL AND due_date < ?", Date.today)
-      if overdue_loans.exists?
-        @loan_available = 0
-      else
-        on_loan = @member.loans.where("return_date IS NULL AND loan_date IS NOT NULL")
-        @loan_available = [5 - on_loan.count, 0].max
-      end
+      @loan_available = @member.available_loans_count
     end
   end
 
   def confirm
+    binding.break
     @loan = Loan.new(loan_params)
     @member = Member.find_by(id: @loan.member_id)
     @stock = Stock.find_by(id: @loan.stock_id)
-
-    @loan.set_due_date
-    
-    if @member
-      overdue_loans = @member.loans.where("return_date IS NULL AND due_date < ?", Date.today)
-      if overdue_loans.exists?
-        @loan_available = 0
-      else
-        on_loan = @member.loans.where("return_date IS NULL AND loan_date IS NOT NULL")
-        @loan_available = [5 - on_loan.count, 0].max
-      end
-    end
-
-    if @loan.stock_id.blank?
-      @loan.errors.add(:base, "資料IDを入力してください")
-    elsif @stock.nil?
-      @loan.errors.add(:base, "指定された資料は存在しません")
-    elsif @stock.disposal_date.present?
-      @loan.errors.add(:base, "指定された資料は廃棄されています")
-    elsif Loan.exists?(stock_id: @loan.stock_id, return_date: nil)
-      @loan.errors.add(:base, "指定された資料は貸出中です")
-    end
-
-    if @loan.member_id.blank?
-      @loan.errors.add(:base, "会員IDを入力してください")
-    elsif @member.nil?
-      @loan.errors.add(:base, "指定された会員は存在しません")
-    elsif @member.remove_date.present?
-      @loan.errors.add(:base, "指定された会員は退会しています")
-    elsif member_overdue?(@member)
-      @loan.errors.add(:base, "指定された会員は延滞中です")
-    end
-
-    if @loan.loan_date.blank?
-      @loan.errors.add(:base, "貸出年月日を入力してください")
-    end
-    
-    if @loan.errors.any?
-      render :new, status: :unprocessable_entity
-    else
-      @due_date = @loan.due_date
+    if @loan.valid?
+      @loan.set_due_date
       render :confirm
-    end
-  end
-
-  def create
-    @loan = Loan.new(loan_params)
-
-    if @loan.save
-      flash[:success] = '新規貸出を登録しました'
-      redirect_to @loan
     else
-      flash.now[:danger] = '登録できませんでした'
       render :new, status: :unprocessable_entity
     end
   end
 
   def create
     @loan = Loan.new(loan_params)
+
     if @loan.save
       flash[:success] = '新規貸出を登録しました'
       redirect_to @loan
@@ -124,11 +66,13 @@ class LoansController < ApplicationController
 
   def update
     @loan = Loan.find(params[:id])
+    Rails.logger.debug("Received params: #{params.inspect}")
     if @loan.update(loan_params)
-      flash[:success] = '返却記録を登録しました'
+      flash[:success] = '更新しました'
       redirect_to loan_path(@loan)
     else
-      flash.now[:danger] = '登録できませんでした'
+      flash.now[:danger] = '更新できませんでした'
+      Rails.logger.debug(@loan.errors.full_messages) 
       render :edit, status: :unprocessable_entity
     end
   end
@@ -143,10 +87,5 @@ class LoansController < ApplicationController
   
   def loan_params
     params.require(:loan).permit(:member_id, :stock_id, :loan_date, :due_date, :return_date, :remarks)
-  end
-
-  def member_overdue?(member)
-    overdue_loans = Loan.where(member_id: member.id, return_date: nil).where("due_date < ?", Date.today)
-    overdue_loans.any?
   end
 end

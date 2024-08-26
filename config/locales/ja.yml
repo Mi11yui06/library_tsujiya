@@ -20,7 +20,11 @@ ja:
         isbn: ISBN番号
         category: 分類
       stock:
+        title: 資料名
         arrival_date: 入荷年月日
+      loan: 
+        loan_date: 貸出年月日
+        due_date: 返却期日
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'

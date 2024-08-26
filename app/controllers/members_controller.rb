@@ -2,7 +2,7 @@ class MembersController < ApplicationController
   before_action :require_logged_in
   
   def index
-    @members = Member.order(:id).page(params[:page]).per(15)
+    @members = Member.order(:id).page(params[:page]).per(PER_PAGE)
 
     # 検索パラメータを取得
     search_id = params[:search_id]
@@ -12,6 +12,8 @@ class MembersController < ApplicationController
     @members = @members.where(id: search_id.to_i) if search_id.present?
     @members = @members.where('name LIKE ?', "%#{search_name}%") if search_name.present?
     @members = @members.where.not(remove_date: nil) if params[:removed_member].to_i == 1
+
+    @members_count = @members.total_count
   end
 
   def show

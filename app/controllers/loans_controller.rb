@@ -2,10 +2,11 @@ class LoansController < ApplicationController
   before_action :require_logged_in
 
   def index
-    @loans = Loan.order(id: :desc).page(params[:page]).per(15)
+    @loans = Loan.joins(stock: :catalog).order(id: :desc).page(params[:page]).per(PER_PAGE)
     
     search_member = params[:search_member]
     search_stock = params[:search_stock]
+    serch_category = params[:search_category]
 
     @member = Member.find_by(id: search_member)
     if @member
@@ -16,6 +17,9 @@ class LoansController < ApplicationController
     @loans = @loans.where(stock_id: search_stock.to_i) if search_stock.present?
     @loans = @loans.where("due_date < ? AND return_date IS NULL", Date.today) if params[:overdue].to_i == 1
     @loans = @loans.where(return_date: nil) if params[:on_loan].to_i == 1
+    @loans = @loans.where('catalogs.category_id = ?', serch_category) if serch_category.present?
+
+    @loans_count = @loans.total_count
   end
 
   def show
@@ -36,7 +40,6 @@ class LoansController < ApplicationController
   end
 
   def confirm
-    binding.break
     @loan = Loan.new(loan_params)
     @member = Member.find_by(id: @loan.member_id)
     @stock = Stock.find_by(id: @loan.stock_id)

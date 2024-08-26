@@ -5,6 +5,8 @@ class Loan < ApplicationRecord
   belongs_to :member, optional: true
   belongs_to :stock, optional: true
 
+  has_one :catalog, through: :stock
+
   before_validation :set_due_date
 
 
@@ -41,7 +43,7 @@ class Loan < ApplicationRecord
     elsif member_overdue?
       errors.add(:base, "指定された会員は延滞中です")
     elsif loan_limit_exceeded?
-      errors.add(:base, '指定された会員はすでに5冊貸出中です')
+      errors.add(:base, "指定された会員はすでに#{MAX_CONCURRENT_LOANS}冊貸出中です")
     end
     
     # 資料IDのバリデーション
@@ -74,7 +76,7 @@ class Loan < ApplicationRecord
 
   # すでに5冊貸出中か
   def loan_limit_exceeded?
-    member.loans.where(return_date: nil).count >= 5 #定数化する
+    member.loans.where(return_date: nil).count >= MAX_CONCURRENT_LOANS #定数化する
   end
 end
 

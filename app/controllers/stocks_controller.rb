@@ -2,7 +2,7 @@ class StocksController < ApplicationController
   before_action :require_logged_in
   
   def index
-    @stocks = Stock.joins(:catalog).order(id: :desc).page(params[:page]).per(15)
+    @stocks = Stock.joins(:catalog).order(id: :desc).page(params[:page]).per(PER_PAGE)
 
     search_id = params[:search_id]
     search_isbn = params[:search_isbn]
@@ -21,6 +21,8 @@ class StocksController < ApplicationController
     when 'discarded'
       @stocks = @stocks.where.not(disposal_date: nil)
     end
+
+    @stocks_count = @stocks.total_count
   end
   
   def show

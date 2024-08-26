@@ -16,7 +16,7 @@ class Member < ApplicationRecord
   # 会員が今貸出できる冊数
   def available_loans_count
     return 0 if overdue?
-    [5 - loans.where("return_date IS NULL").count, 0].max
+    [MAX_CONCURRENT_LOANS - loans.where("return_date IS NULL").count, 0].max
   end
   
   private

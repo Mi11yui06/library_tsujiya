@@ -15,6 +15,10 @@
                                 <%= f.label :search_stock, '資料ID' %>
                                 <%= f.text_field :search_stock, value: params[:search_stock], class: "form-control" %>
                             </div>
+                            <div class="form-group col-md-7 mb-3">
+                            <%= f.label :search_category, '分類' %>
+                            <%= f.collection_select(:search_category, Category.all, :id, :code_with_name, { include_blank: "選択してください", selected: params[:search_category]}, { class: 'form-control' }) %>
+                            </div>
                             <div class="form-group col-md-10 mb-3">
                                 <%= f.check_box :overdue, { checked: params[:overdue] == '1', class: 'form-check-input'}, '1', '0' %>
                                 <%= f.label :overdue, '延滞', class: 'form-check-label' %>
@@ -34,14 +38,14 @@
         </div>
         <div class="col-9"><!-- グリッド（右列）-->
             <div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
-                <h1 class="h3">貸出台帳一覧</h1>
+                <h1 class="h3">貸出一覧（<%= @loans.total_count %>件中 <%= @loans.offset_value + 1 %>〜<%= [@loans.offset_value + @loans.limit_value, @loans.total_count].min %>件表示）</h1>
                 <%= button_to '新規貸出', new_loan_path, method: :get, class: "btn btn-sm btn-outline-primary"%>
             </div>
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>会員ID</th><th>会員名</th><th>資料ID</th><th>貸出年月日</th><th>返却期日</th><th>超過日数</th><th>返却年月日</th><th>備考</th>
+                            <th>会員ID</th><th>会員名</th><th>資料ID</th><th>資料名</th><th>分類</th><th>貸出年月日</th><th>返却期日</th><th>超過日数</th><th>返却年月日</th><th>備考</th>
                         </tr>
                     </thead>
                     <tbody class="table-group-divider">
@@ -50,6 +54,8 @@
                             <td><%= l.member_id %></td>
                             <td><%= l.member.name %></td>
                             <td><%= l.stock_id %></td>
+                            <td><%= l.stock.catalog.title %></td>
+                            <td><%= l.stock.catalog.category.code %>: <%= l.stock.catalog.category.name %></td>
                             <td><%= l.loan_date %></td>
                             <td><%= l.due_date %></td>
                             <td><%= l.overdue_days %></td>

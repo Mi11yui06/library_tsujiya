@@ -2,7 +2,7 @@ class CatalogsController < ApplicationController
   before_action :require_logged_in
   
   def index
-    @catalogs = Catalog.order(:id).page(params[:page]).per(15)
+    @catalogs = Catalog.order(:id).page(params[:page]).per(PER_PAGE)
 
     search_title = params[:search_title]
     search_isbn = params[:search_isbn]
@@ -17,6 +17,7 @@ class CatalogsController < ApplicationController
     @catalogs = @catalogs.where(category_id: search_category) if search_category.present?
     @catalogs = @catalogs.where('publish_date >= ?', 3.months.ago.to_date) if params[:recent_publication].to_i == 1
 
+    @catalogs_count = @catalogs.total_count
   end
 
   def show

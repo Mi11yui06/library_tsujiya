@@ -11,3 +11,21 @@
     background: #f8d6da;
     color: #842029;
 }
+
+/*ページネーション自体のデザイン*/
+.pagination>li>a {          
+    border: none;     /*枠線をなくす*/
+    color: #000000;   /*文字の色を変える*/
+    font-size: 17px;
+}
+
+/* 表示しているページ番号のデザイン */
+.pagination>.active>a {     
+    background: #0d6efd;    /*背景の色を変える*/
+    border-radius: 5px;     /*角を丸くする*/
+}
+
+/*ホバー時のデザイン*/
+.pagination>li>a:hover {        
+    border-radius: 5px;    /*角を丸くする*/
+}

@@ -56,7 +56,7 @@
                         <% end %>
                     </tbody>
                 </table>
-                <%= paginate @members, theme: 'bootstrap-5' %>
+                <%= paginate @members, window: 4, outer_window: 1, left: 2, right: 2, theme: 'bootstrap-5' %>
             </div>
         </div>
     </div>

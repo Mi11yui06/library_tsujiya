@@ -29,3 +29,7 @@
 .pagination>li>a:hover {        
     border-radius: 5px;    /*角を丸くする*/
 }
+
+.nowrap {
+    white-space: nowrap;
+}

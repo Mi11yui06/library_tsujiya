@@ -3,7 +3,7 @@
 <div class="container mt-4">
     <!-- 貸出・返却・新規予約 -->
     <div class="row mb-4">
-        <div class="col-md-4">
+        <div class="col-md-4 mb-4">
             <div class="card text-center">
                 <div class="card-header bg-primary text-white">貸出</div>
                 <div class="card-body">
@@ -13,12 +13,12 @@
                         <%= form.label :member_id, "会員ID" %>
                         <%= form.text_field :member_id, class: "form-control" %>
                     </div>
-                    <%= form.submit "貸出登録", class: "btn btn-primary" %>
+                    <%= form.submit "貸出登録", class: "btn btn-lg btn-primary" %>
                     <% end %>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 mb-4">
             <div class="card text-center">
                 <div class="card-header bg-success text-white">返却</div>
                 <div class="card-body">

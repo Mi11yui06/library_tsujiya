@@ -5,7 +5,7 @@
     <div class="row mb-4">
         <div class="col-md-4 mb-4">
             <div class="card text-center">
-                <div class="card-header bg-primary text-white">貸出</div>
+                <div class="card-header bg-secondary text-white">貸出</div>
                 <div class="card-body">
                     <p>新規貸出を登録します。</p>
                     <%= form_with url: loans_path(member_id: params[:member_id]), method: :get, local: true do |form| %>
@@ -13,17 +13,17 @@
                         <%= form.label :member_id, "会員ID" %>
                         <%= form.text_field :member_id, class: "form-control" %>
                     </div>
-                    <%= form.submit "貸出登録", class: "btn btn-lg btn-primary" %>
+                    <%= form.submit "貸出登録", class: "btn btn-lg btn-secondary" %>
                     <% end %>
                 </div>
             </div>
         </div>
         <div class="col-md-4 mb-4">
             <div class="card text-center">
-                <div class="card-header bg-success text-white">返却</div>
+                <div class="card-header bg-secondary text-white">返却</div>
                 <div class="card-body">
                     <p>返却処理を行います。</p>
-                    <%= link_to '返却処理', new_loan_path, class: "btn btn-lg btn-success" %>
+                    <%= link_to '返却処理', new_loan_path, class: "btn btn-lg btn-secondary" %>
                 </div>
             </div>
         </div>

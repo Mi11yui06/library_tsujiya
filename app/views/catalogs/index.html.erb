@@ -1,48 +1,44 @@
 <% @document_title = "資料目録" %>
 <div class="container-fluid py-1">
     <div class="row"><!-- グリッド（行）-->
-        <div class="col-3"><!-- グリッド（左列）-->
-            <form class="card" action="" method="get">
-                <div class="card-header">検索フォーム</div>
-                <div class="card-body">
-                    <%= form_with url: catalogs_path, method: :get, local: true, class: "mb-3" do |f|%>
-                        <div class="form-row">
-                            <div class="form-group col-md-7 mb-3">
-                                <%= f.label :search_isbn, 'ISBN番号' %>
-                                <%= f.text_field :search_isbn, value: params[:search_isbn], class: "form-control" %>
-                            </div>
-                            <div class="form-group col-md-10 mb-3">
-                                <%= f.label :search_title, '資料名' %>
-                                <%= f.text_field :search_title, value: params[:search_title], class: "form-control" %>
-                            </div>
-                            <div class="form-group col-md-7 mb-3">
-                                <%= f.label :search_author, '著者' %>
-                                <%= f.text_field :search_author, value: params[:search_author], class: "form-control" %>
-                            </div>
-                            <div class="form-group col-md-7 mb-3">
-                                <%= f.label :search_publisher, '出版社' %>
-                                <%= f.text_field :search_publisher, value: params[:search_publisher], class: "form-control" %>
-                            </div>
-                            <div class="form-group col-md-7 mb-3">
-                                <%= f.label :search_category, '分類' %>
-                                <%= f.collection_select(:search_category, Category.all, :id, :code_with_name, { include_blank: "選択してください", selected: params[:search_category]}, { class: 'form-control' }) %>
-                            </div>
-                            <div class="form-group col-md-7 mb-3">
-                                <%= f.check_box :recent_publication, { checked: params[:recent_publication] == '1', class: 'form-check-input'}, '1', '0' %>
-                                <%= f.label :recent_publication, '新刊本', class: 'form-check-label' %>
-                            </div>
-                        </div>                         
-                </div>
-                <div class="card-footer d-flex justify-content-around">
-                    <div class="mb-2 mb-md-0">
-                        <%= f.submit '検索する', name: nil, class: "btn btn-primary w-100 w-md-auto" %>
-                    </div>
-                    <div>
-                        <%= link_to 'クリア', catalogs_path, class: "btn btn-secondary w-100 w-md-auto" %>
-                    </div>
-                </div>
-                <% end %>
-            </form>
+        <div class="col-3">
+            <%= form_with url: catalogs_path, method: :get, local: true, class: "mb-3 p-3 border border-secondary rounded" do |f| %>
+            <h5 class="mb-3 d-flex align-items-center">
+                <i class="bi bi-search me-2"></i>検索
+            </h5>
+        <div class="form-group col-md-7 mb-3">
+            <%= f.label :search_isbn, 'ISBN番号' %>
+            <%= f.text_field :search_isbn, value: params[:search_isbn], class: "form-control" %>
+        </div>
+        <div class="form-group col-md-10 mb-3">
+            <%= f.label :search_title, '資料名' %>
+            <%= f.text_field :search_title, value: params[:search_title], class: "form-control" %>
+        </div>
+        <div class="form-group col-md-7 mb-3">
+            <%= f.label :search_author, '著者' %>
+            <%= f.text_field :search_author, value: params[:search_author], class: "form-control" %>
+        </div>
+        <div class="form-group col-md-7 mb-3">
+            <%= f.label :search_publisher, '出版社' %>
+            <%= f.text_field :search_publisher, value: params[:search_publisher], class: "form-control" %>
+        </div>
+        <div class="form-group col-md-7 mb-3">
+            <%= f.label :search_category, '分類' %>
+            <%= f.collection_select(:search_category, Category.all, :id, :code_with_name, { include_blank: "選択してください", selected: params[:search_category]}, { class: 'form-control' }) %>
+        </div>
+        <div class="form-group col-md-7 mb-3">
+            <%= f.check_box :recent_publication, { checked: params[:recent_publication] == '1', class: 'form-check-input'}, '1', '0' %>
+            <%= f.label :recent_publication, '新刊本', class: 'form-check-label' %>
+        </div>
+        <div class="d-flex justify-content-around">
+            <div class="mb-2 mb-md-0">
+                <%= f.submit '検索する', name: nil, class: "btn btn-primary w-100 w-md-auto" %>
+            </div>
+            <div>
+                <%= link_to 'クリア', catalogs_path, class: "btn btn-secondary w-100 w-md-auto" %>
+            </div>
+        </div>
+        <% end %>
         </div>
         <div class="col-9"><!-- グリッド（右列）-->
             <div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">

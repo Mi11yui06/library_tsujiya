@@ -73,6 +73,8 @@ GEM
     bindex (0.8.1)
     bootsnap (1.18.4)
       msgpack (~> 1.2)
+    bootstrap-icons (1.0.14)
+      nokogiri (~> 1)
     bootstrap5-kaminari-views (0.0.1)
       kaminari (>= 0.13)
       rails (>= 3.1)
@@ -256,6 +258,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap
+  bootstrap-icons
   bootstrap5-kaminari-views
   capybara
   debug

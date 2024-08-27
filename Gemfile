@@ -74,3 +74,4 @@ end
 gem 'rails-i18n'
 gem 'kaminari'
 gem 'bootstrap5-kaminari-views'
+gem 'bootstrap-icons'

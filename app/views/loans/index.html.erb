@@ -1,5 +1,5 @@
 <% @document_title = "貸出台帳" %>
-<div class="container-fluid py-3">
+<div class="container-fluid py-1">
     <div class="row"><!-- グリッド（行）-->
         <div class="col-3"><!-- グリッド（左列）-->
             <form class="card" action="" method="get">
@@ -93,7 +93,7 @@
                         <% end %>
                     </tbody>
                 </table>
-                <%= paginate @loans, theme: 'bootstrap-5' %>
+                <%= paginate @loans, window: 2, outer_window: 1, left: 1, right: 1, theme: 'bootstrap-5' %>
             </div>
         </div>
     </div>

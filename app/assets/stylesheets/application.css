@@ -30,6 +30,47 @@
     border-radius: 5px;    /*角を丸くする*/
 }
 
+.pagination .page-item.disabled .page-link {
+    background-color: #ffffff; /* 背景色を薄いグレーにする */
+    color: #000000; /* 文字色をグレーにする */
+}
+
 .nowrap {
     white-space: nowrap;
+}
+
+.breadcrumb {
+    padding: 1rem 1.5rem 0rem;
+    gap: 10px;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: ">";
+    padding:  0.5rem;
+    color: #6c757d;
+}
+
+.breadcrumb-item.active {
+    color: #6c757d; 
+}
+
+.breadcrumb-item a {
+    color: #000000; 
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    color: #666666; 
+    text-decoration: underline; 
+}
+.breadcrumb-separator {
+    margin: 0 8px; 
+}
+
+.login-box {
+    padding: 20px;
+    border: 1px solid #ddd; /* ボックスの枠線 */
+    border-radius: 8px; /* 角を丸める場合は値を調整 */
+    background-color: #fff; /* ボックスの背景色 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* ボックスに影を追加 */
 }

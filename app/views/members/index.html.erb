@@ -1,5 +1,5 @@
 <% @document_title = "会員台帳" %>
-<div class="container-fluid py-3">
+<div class="container-fluid py-1">
     <div class="row"><!-- グリッド（行）-->
         <div class="col-3"><!-- グリッド（左列）-->
             <form class="card" action="" method="get">
@@ -71,7 +71,7 @@
                         <% end %>
                     </tbody>
                 </table>
-                <%= paginate @members, window: 4, outer_window: 1, left: 2, right: 2, theme: 'bootstrap-5' %>
+                <%= paginate @members, window: 2, outer_window: 1, left: 1, right: 1, theme: 'bootstrap-5' %>
             </div>
         </div>
     </div>

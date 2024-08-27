@@ -22,8 +22,12 @@
                         </div>                         
                 </div>
                 <div class="card-footer d-flex justify-content-around">
-                        <%= f.submit '検索する', name: nil, class: "btn btn-primary btn-fullwidth btn-margin" %>
-                        <%= link_to 'クリア', members_path, class: "btn btn-secondary btn-fullwidth"%>
+                    <div class="mb-2 mb-md-0">
+                        <%= f.submit '検索する', name: nil, class: "btn btn-primary w-100 w-md-auto" %>
+                    </div>
+                    <div>
+                        <%= link_to 'クリア', members_path, class: "btn btn-secondary w-100 w-md-auto" %>
+                    </div>
                 </div>
                 <% end %>
             </form>
@@ -40,21 +44,29 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>ID</th><th>氏名</th><th>郵便番号</th><th>住所</th><th>電話番号</th><th>E-mail</th><th>生年月日</th><th>入会年月日</th><th>退会年月日</th>
+                            <th class="nowrap">ID</th>
+                            <th class="nowrap">氏名</th>
+                            <th class="nowrap">郵便番号</th>
+                            <th class="text-truncate">住所</th>
+                            <th class="text-truncate">電話番号</th>
+                            <th class="nowrap">E-mail</th>
+                            <th class="nowrap">生年月日</th>
+                            <th class="nowrap">入会年月日</th>
+                            <th class="nowrap">退会年月日</th>
                         </tr>
                     </thead>
                     <tbody class="table-group-divider">
                         <% @members.each do |m| %>
                         <tr style="cursor: pointer;" onclick="window.location='<%= member_path(m) %>';">
-                            <td><%= m.id %></td>
-                            <td><%= m.name %></td>
-                            <td><%= m.post_code %></td>
-                            <td><%= m.address %></td>
-                            <td><%= m.tel %></td>
-                            <td><%= m.email %></td>
-                            <td><%= m.birth_date %></td>
-                            <td><%= m.join_date %></td>
-                            <td><%= m.remove_date %></td>
+                            <td class="nowrap"><%= m.id %></td>
+                            <td class="nowrap"><%= m.name %></td>
+                            <td class="nowrap"><%= m.post_code %></td>
+                            <td class="text-truncate" style="max-width: 150px;"><%= m.address %></td>
+                            <td class="nowrap"><%= m.tel %></td>
+                            <td class="text-truncate" style="max-width: 150px;"><%= m.email %></td>
+                            <td class="nowrap"><%= m.birth_date %></td>
+                            <td class="nowrap"><%= m.join_date %></td>
+                            <td class="nowrap"><%= m.remove_date %></td>
                         </tr>
                         <% end %>
                     </tbody>

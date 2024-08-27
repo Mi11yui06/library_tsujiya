@@ -44,8 +44,12 @@
                         </div>                         
                 </div>
                 <div class="card-footer d-flex justify-content-around">
-                        <%= f.submit '検索する', name: nil, class: "btn btn-primary btn-fullwidth btn-margin" %>
-                        <%= link_to 'クリア', loans_path, class: "btn btn-secondary btn-fullwidth"%>
+                    <div class="mb-2 mb-md-0">
+                        <%= f.submit '検索する', name: nil, class: "btn btn-primary w-100 w-md-auto" %>
+                    </div>
+                    <div>
+                        <%= link_to 'クリア', loans_path, class: "btn btn-secondary w-100 w-md-auto" %>
+                    </div>
                 </div>
                 <% end %>
             </form>
@@ -62,22 +66,29 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>会員ID</th><th>会員名</th><th>資料ID</th><th>資料名</th><th>分類</th><th>貸出年月日</th><th>返却期日</th><th>超過日数</th><th>返却年月日</th><th>備考</th>
+                            <th class="nowrap">会員ID</th>
+                            <th class="nowrap">会員名</th>
+                            <th class="nowrap">資料ID</th>
+                            <th class="text-truncate">資料名</th>
+                            <th class="nowrap">分類</th>
+                            <th class="nowrap">貸出年月日</th>
+                            <th class="nowrap">返却期日</th>
+                            <th class="nowrap">超過日数</th>
+                            <th class="nowrap">返却年月日</th>
                         </tr>
                     </thead>
                     <tbody class="table-group-divider">
                         <% @loans.each do |l| %>
                         <tr style="cursor: pointer;" onclick="window.location='<%= loan_path(l) %>';">
-                            <td><%= l.member_id %></td>
-                            <td><%= l.member.name %></td>
-                            <td><%= l.stock_id %></td>
-                            <td><%= l.stock.catalog.title %></td>
-                            <td><%= l.stock.catalog.category.code %>: <%= l.stock.catalog.category.name %></td>
-                            <td><%= l.loan_date %></td>
-                            <td><%= l.due_date %></td>
-                            <td><%= l.overdue_days %></td>
-                            <td><%= l.return_date %></td>
-                            <td><%= l.remarks %></td>
+                            <td class="nowrap"><%= l.member_id %></td>
+                            <td class="nowrap"><%= l.member.name %></td>
+                            <td class="nowrap"><%= l.stock_id %></td>
+                            <td class="text-truncate" style="max-width: 150px;"><%= l.stock.catalog.title %></td>
+                            <td class="nowrap"><%= l.stock.catalog.category.code %>: <%= l.stock.catalog.category.name %></td>
+                            <td class="nowrap"><%= l.loan_date %></td>
+                            <td class="nowrap"><%= l.due_date %></td>
+                            <td class="nowrap"><%= l.overdue_days %></td>
+                            <td class="nowrap"><%= l.return_date %></td>
                         </tr>
                         <% end %>
                     </tbody>

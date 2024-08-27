@@ -64,11 +64,6 @@ class Loan < ApplicationRecord
     end
   end
 
-  # 返却日が記入されているか？
-  # def return_date_present?
-  #   !return_date.nil?
-  # end
-
   # 延滞しているかどうか
   def member_overdue?
     member.loans.where(return_date: nil).where("due_date < ?", Date.today).exists?

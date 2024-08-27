@@ -98,34 +98,3 @@
         </div>
     </div>
 </div>
-
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const yearSelect = document.getElementById('year-select')
-    const monthSelect = document.getElementById('month-select')
-    const daySelect = document.getElementById('day-select')
-
-    function updateDayOptions() {
-    const year = yearSelect.value
-    const month = monthSelect.value
-    const daysInMonth = new Date(year, month, 0).getDate()
-
-    while (daySelect.firstChild) {
-        daySelect.removeChild(daySelect.firstChild);
-    }
-
-    for (var i = 1; i <= daysInMonth; i++) {
-        var option = document.createElement('option');
-        option.value = i;
-        option.text = i;
-        daySelect.appendChild(option);
-    }
-    }
-
-    updateDayOptions()
-
-    yearSelect.addEventListener('change', updateDayOptions);
-    monthSelect.addEventListener('change', updateDayOptions);
-})
-</script>

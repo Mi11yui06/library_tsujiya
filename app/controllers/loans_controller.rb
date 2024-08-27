@@ -7,7 +7,7 @@ class LoansController < ApplicationController
     search_member = params[:search_member]
     search_stock = params[:search_stock]
     serch_category = params[:search_category]
-    year = params[:search_yaer]
+    year = params[:search_year]
     month = params[:search_month]
     day = params[:search_day]
 

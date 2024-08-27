@@ -38,7 +38,7 @@
         <td><%= f.date_select :publish_date, start_year: 1850, end_year: Time.now.year, include_blank: true %></td>
     </tr>
 </table>
-<p><%= f.submit '更新する', class: "btn btn-outline-primary"%></p>
+<p><%= f.submit '更新する', class: "btn btn-sm btn-outline-secondary"%></p>
 <% end %>
 <p><%= link_to 'キャンセル', catalog_path %></p>
 

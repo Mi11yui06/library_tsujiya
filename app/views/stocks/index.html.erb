@@ -34,7 +34,10 @@
         </div>
         <div class="col-9"><!-- グリッド（右列）-->
             <div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
-                <h1 class="h3">在庫一覧（<%= @stocks.total_count %>件中 <%= @stocks.offset_value + 1 %>〜<%= [@stocks.offset_value + @stocks.limit_value, @stocks.total_count].min %>件表示）</h1>
+                <div class="d-flex align-items-center">
+                    <h1 class="h3 mb-0">在庫一覧</h1>
+                    <span class="ms-2">（<%= @stocks.total_count %>件表示）</span>
+                </div>
             </div>
             <div class="table-responsive">
                 <table class="table table-hover">

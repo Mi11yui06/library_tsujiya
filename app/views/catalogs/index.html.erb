@@ -42,8 +42,11 @@
         </div>
         <div class="col-9"><!-- グリッド（右列）-->
             <div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
-                <h1 class="h3">資料目録一覧（<%= @catalogs.total_count %>件中 <%= @catalogs.offset_value + 1 %>〜<%= [@catalogs.offset_value + @catalogs.limit_value, @catalogs.total_count].min %>件表示）</h1>
-                <%= button_to '新規登録', new_catalog_path, method: :get, class: "btn btn-sm btn-outline-primary"%>
+                <div class="d-flex align-items-center">
+                    <h1 class="h3 mb-0">資料目録一覧</h1>
+                    <span class="ms-2">（<%= @catalogs.total_count %>件表示）</span>
+                </div>
+                <%= button_to '新規登録', new_catalog_path, method: :get, class: "btn btn-outline-primary"%>
             </div>
             <div class="table-responsive">
                 <table class="table table-hover">

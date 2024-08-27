@@ -55,6 +55,6 @@
         <td><%= f.date_select :remove_date, start_year: 2000, end_year: Time.now.year, include_blank: true %></td>
     </tr>
 </table>
-<p><%= f.submit '更新する', class: "btn btn-outline-primary"%></p>
+<p><%= f.submit '更新する', class: "btn btn-sm btn-outline-secondary"%></p>
 <% end %>
 <p><%= link_to 'キャンセル', member_path %></p>

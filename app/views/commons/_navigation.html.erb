@@ -1,20 +1,20 @@
 <header class="sticky-top">
     <nav class="navbar navbar-expand navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">図書管理システム</a>
+            <a class="navbar-brand" href="/">新宿図書館</a>
             <div class="collapse navbar-collapse d-flex justify-content-between align-items-center">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/members">会員台帳</a>
+                        <a class="nav-link <%= 'active' if request.path.start_with?('/members') %>" href="/members">会員台帳</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/catalogs">資料目録</a>
+                        <a class="nav-link <%= 'active' if request.path.start_with?('/catalogs') %>" href="/catalogs">資料目録</a>
                     </li>      
                     <li class="nav-item">
-                        <a class="nav-link" href="/stocks">在庫台帳</a>
+                        <a class="nav-link <%= 'active' if request.path.start_with?('/stocks') %>" href="/stocks">在庫台帳</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/loans">貸出台帳</a>
+                        <a class="nav-link <%= 'active' if request.path.start_with?('/loans') %>" href="/loans">貸出台帳</a>
                     </li>        
                 </ul>
                 <%= button_to 'ログアウト', logout_path, method: :delete, class: "btn btn-sm btn-outline-light"%>

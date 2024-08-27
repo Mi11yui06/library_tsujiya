@@ -41,5 +41,30 @@
         <td><%= @member.remove_date %></td>
     </tr>
 </table>
-<p><%= link_to '編集する', edit_member_path, method: :get, class: "btn btn-sm btn-outline-primary"%></p>
+<p>
+    <%= link_to '編集する', edit_member_path, method: :get, class: "btn btn-sm btn-outline-primary"%>
+    <span class="ms-2 text-secondary">※未返却の資料がある場合は退会できません</span>
+</p>
 <p><%= link_to '一覧に戻る', members_path %></p>
+
+<h4>未返却の資料（<%= @unreturned_count %>冊）</h4>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>資料ID</th><th>資料名</th><th>貸出年月日</th><th>返却期日</th><th>返却年月日</th><th>超過日数</th><th>備考</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        <% @loans.each do |l| %>
+        <tr style="cursor: pointer;" onclick="window.location='<%= loan_path(l) %>';">
+            <td><%= l.id %></td>
+            <td><%= l.stock.catalog.title %></td>
+            <td><%= l.loan_date %></td>
+            <td><%= l.due_date %></td>
+            <td><%= l.return_date %></td>
+            <td><%= l.overdue_days %></td>
+            <td><%= l.remarks %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>

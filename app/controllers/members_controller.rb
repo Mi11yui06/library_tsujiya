@@ -18,6 +18,8 @@ class MembersController < ApplicationController
 
   def show
     @member = Member.find(params[:id])
+    @loans = Loan.where(member_id: @member.id).where(return_date: nil)
+    @unreturned_count = @loans.count
   end
 
   def new

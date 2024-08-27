@@ -43,16 +43,16 @@
         <td><%= f.email_field :email, size: 50 %></td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :birth_date, '生年月日' %><span style="color: red;">*</span></th>
+        <th class="table-secondary"><%= f.label :birth_date, '生年月日' %></span></th>
         <td><%= @member.birth_date %></td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :birth_date, '入会年月日' %><span style="color: red;">*</span></th>
+        <th class="table-secondary"><%= f.label :birth_date, '入会年月日' %></span></th>
         <td><%= @member.join_date %></td>
     </tr>
     <tr>
         <th class="table-secondary"><%= f.label :remove_date, '退会年月日' %></th>
-        <td><%= f.date_select :remove_date, start_year: 1950, end_year: Time.now.year, include_blank: true %></td>
+        <td><%= f.date_select :remove_date, start_year: 2000, end_year: Time.now.year, include_blank: true %></td>
     </tr>
 </table>
 <p><%= f.submit '更新する', class: "btn btn-outline-primary"%></p>

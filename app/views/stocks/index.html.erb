@@ -1,40 +1,36 @@
 <% @document_title = "在庫台帳" %>
 <div class="container-fluid py-1">
     <div class="row"><!-- グリッド（行）-->
-        <div class="col-3"><!-- グリッド（左列）-->
-            <form class="card" action="" method="get">
-                <div class="card-header">検索フォーム</div>
-                <div class="card-body">
-                    <%= form_with url: stocks_path, method: :get, local: true, class: "mb-3" do |f|%>
-                        <div class="form-row">
-                            <div class="form-group col-md-4 mb-3">
-                                <%= f.label :search_id, '資料ID' %>
-                                <%= f.text_field :search_id, value: params[:search_id], class: "form-control" %>
-                            </div>
-                            <div class="form-group col-md-7 mb-3">
-                                <%= f.label :search_isbn, 'ISBN番号' %>
-                                <%= f.text_field :search_isbn, value: params[:search_isbn], class: "form-control" %>
-                            </div>
-                            <div class="form-group col-md-10 mb-3">
-                                <%= f.label :search_name, '資料名' %>
-                                <%= f.text_field :search_title, value: params[:search_title], class: "form-control" %>
-                            </div>
-                            <div class="form-group col-md-4 mb-3">
-                            <%= f.label :status, '状態', class: 'form-label' %>
-                            <%= f.select :status, [['すべて', ''], ['貸出中', 'on_loan'], ['貸出可能', 'available'], ['廃棄済み', 'discarded']], {selected: params[:status]}, { class: 'form-select' } %>
-                            </div>
-                        </div>                         
-                </div>
-                <div class="card-footer d-flex justify-content-around">
-                    <div class="mb-2 mb-md-0">
-                        <%= f.submit '検索する', name: nil, class: "btn btn-primary w-100 w-md-auto" %>
-                    </div>
-                    <div>
-                        <%= link_to 'クリア', stocks_path, class: "btn btn-secondary w-100 w-md-auto" %>
-                    </div>
-                </div>
-                <% end %>
-            </form>
+        <div class="col-3">
+            <%= form_with url: stocks_path, method: :get, local: true, class: "mb-3 p-3 border border-secondary rounded" do |f| %>
+            <h5 class="mb-3 d-flex align-items-center">
+                <i class="bi bi-search me-2"></i>検索
+            </h5>
+        <div class="form-group col-md-4 mb-3">
+            <%= f.label :search_id, '資料ID' %>
+            <%= f.text_field :search_id, value: params[:search_id], class: "form-control" %>
+        </div>
+        <div class="form-group col-md-7 mb-3">
+            <%= f.label :search_isbn, 'ISBN番号' %>
+            <%= f.text_field :search_isbn, value: params[:search_isbn], class: "form-control" %>
+        </div>
+        <div class="form-group col-md-10 mb-3">
+            <%= f.label :search_name, '資料名' %>
+            <%= f.text_field :search_title, value: params[:search_title], class: "form-control" %>
+        </div>
+        <div class="form-group col-md-4 mb-3">
+            <%= f.label :status, '状態', class: 'form-label' %>
+            <%= f.select :status, [['すべて', ''], ['貸出中', 'on_loan'], ['貸出可能', 'available'], ['廃棄済み', 'discarded']], {selected: params[:status]}, { class: 'form-select' } %>
+        </div>                        
+        <div class="d-flex justify-content-around">
+            <div class="mb-2 mb-md-0">
+                <%= f.submit '検索する', name: nil, class: "btn btn-primary w-100 w-md-auto" %>
+            </div>
+            <div>
+                <%= link_to 'クリア', stocks_path, class: "btn btn-secondary w-100 w-md-auto" %>
+            </div>
+        </div>
+        <% end %>
         </div>
         <div class="col-9"><!-- グリッド（右列）-->
             <div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">

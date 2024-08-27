@@ -1,7 +1,7 @@
 <header class="sticky-top">
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <nav class="navbar navbar-expand navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">新宿図書館</a>
+            <a class="navbar-brand" href="/"><i class="bi bi-book me-2"></i>新宿図書館</a>
             <div class="collapse navbar-collapse d-flex justify-content-between align-items-center">
                 <ul class="navbar-nav">
                     <li class="nav-item">
@@ -17,7 +17,7 @@
                         <a class="nav-link <%= 'active' if request.path.start_with?('/loans') %>" href="/loans">貸出台帳</a>
                     </li>        
                 </ul>
-                <%= button_to 'ログアウト', logout_path, method: :delete, class: "btn btn-sm btn-outline-light"%>
+                <%= button_to 'ログアウト', logout_path, method: :delete, class: "btn btn-sm btn-outline-dark"%>
             </div>
         </div>
     </nav> 

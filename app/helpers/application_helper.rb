@@ -3,7 +3,7 @@ module ApplicationHelper
   BREADCRUMBS = {
     'members#index' => [['会員一覧', :members_path]],
     'members#new' =>  [['会員一覧', :members_path], ['新規会員登録', :new_member_path]],
-    'members#edit' => [['会員一覧', :members_path], ['会員詳細', :new_membber_path], ['会員情報編集', :new_member_path]],
+    'members#edit' => [['会員一覧', :members_path], ['会員詳細', :new_member_path], ['会員情報編集', :new_member_path]],
     'members#show' => [['会員一覧', :members_path], ['会員詳細', :member_path]],
     'catalogs#index' => [['目録一覧', :catalogs_path]],
     'catalogs#show' => [['目録一覧', :catalogs_path], ['目録詳細', :catalog_path]],
@@ -28,7 +28,7 @@ module ApplicationHelper
       breadcrumbs << {}
     else
       # ホームへのリンク（家のアイコン）
-      breadcrumbs << { title: content_tag(:i, "", class: "bi bi-house-door-fill") + " ホーム", url: root_path }
+      breadcrumbs << { title: content_tag(:i, "", class: "bi bi-house-fill") + " ホーム", url: root_path }
     end
 
     # 現在のコントローラーとアクションに対応するパンくずリストの配列を取得

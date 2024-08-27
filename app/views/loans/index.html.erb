@@ -1,58 +1,54 @@
 <% @document_title = "貸出台帳" %>
 <div class="container-fluid py-1">
     <div class="row"><!-- グリッド（行）-->
-        <div class="col-3"><!-- グリッド（左列）-->
-            <form class="card" action="" method="get">
-                <div class="card-header">検索フォーム</div>
-                <div class="card-body">
-                    <%= form_with url: loans_path, method: :get, local: true, class: "mb-3" do |f|%>
-                        <div class="form-row">
-                            <div class="form-group col-md-4 mb-3">
-                                <%= f.label :search_member, '会員ID' %>
-                                <%= f.text_field :search_member, value: params[:search_member], class: "form-control" %>
-                            </div>
-                            <div class="form-group col-md-4 mb-3">
-                                <%= f.label :search_stock, '資料ID' %>
-                                <%= f.text_field :search_stock, value: params[:search_stock], class: "form-control" %>
-                            </div>
-                            <div class="form-group col-md-8 mb-3">
-                            <%= f.label :search_category, '分類' %>
-                            <%= f.collection_select(:search_category, Category.all, :id, :code_with_name, { include_blank: "選択してください", selected: params[:search_category]}, { class: 'form-control' }) %>
-                            </div>
-                            <div class="form-group col-md-12 mb-3">
-                                <%= f.label :loan_date, '貸出年月日' %>
-                                <div class="d-flex">
-                                    <div class="form-group col-md-3 mb-3">
-                                        <%= f.select :search_year, options_for_select((2000..Date.today.year).to_a, params[:search_year]), { include_blank: "年" }, class: "form-control"%>
-                                    </div>
-                                    <div class="form-group col-md-3 mb-3 mx-2">
-                                        <%= f.select :search_month, options_for_select((1..12).to_a, params[:search_month]), { include_blank: "月" }, class: "form-control"%>
-                                    </div>
-                                    <div class="form-group col-md-3 mb-3">
-                                        <%= f.select :search_day, options_for_select((1..31).to_a, params[:search_day]), { include_blank: "日" }, class: "form-control"%>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-10 mb-3">
-                                <%= f.check_box :overdue, { checked: params[:overdue] == '1', class: 'form-check-input'}, '1', '0' %>
-                                <%= f.label :overdue, '延滞', class: 'form-check-label' %>
-                            </div>
-                            <div class="form-group col-md-10 mb-3">
-                                <%= f.check_box :on_loan, { checked: params[:on_loan] == '1', class: 'form-check-input'}, '1', '0' %>
-                                <%= f.label :on_loan, '貸出中', class: 'form-check-label' %>
-                            </div>
-                        </div>                         
+        <div class="col-3">
+            <%= form_with url: loans_path, method: :get, local: true, class: "mb-3 p-3 border border-secondary rounded" do |f| %>
+            <h5 class="mb-3 d-flex align-items-center">
+                <i class="bi bi-search me-2"></i>検索
+            </h5>
+        <div class="form-group col-md-4 mb-3">
+            <%= f.label :search_member, '会員ID' %>
+            <%= f.text_field :search_member, value: params[:search_member], class: "form-control" %>
+        </div>
+        <div class="form-group col-md-4 mb-3">
+            <%= f.label :search_stock, '資料ID' %>
+            <%= f.text_field :search_stock, value: params[:search_stock], class: "form-control" %>
+        </div>
+        <div class="form-group col-md-8 mb-3">
+        <%= f.label :search_category, '分類' %>
+        <%= f.collection_select(:search_category, Category.all, :id, :code_with_name, { include_blank: "選択してください", selected: params[:search_category]}, { class: 'form-control' }) %>
+        </div>
+        <div class="form-group col-md-12 mb-3">
+            <%= f.label :loan_date, '貸出年月日' %>
+            <div class="d-flex">
+                <div class="form-group col-md-3 mb-3">
+                    <%= f.select :search_year, options_for_select((2000..Date.today.year).to_a, params[:search_year]), { include_blank: "年" }, class: "form-control"%>
                 </div>
-                <div class="card-footer d-flex justify-content-around">
-                    <div class="mb-2 mb-md-0">
-                        <%= f.submit '検索する', name: nil, class: "btn btn-primary w-100 w-md-auto" %>
-                    </div>
-                    <div>
-                        <%= link_to 'クリア', loans_path, class: "btn btn-secondary w-100 w-md-auto" %>
-                    </div>
+                <div class="form-group col-md-3 mb-3 mx-2">
+                    <%= f.select :search_month, options_for_select((1..12).to_a, params[:search_month]), { include_blank: "月" }, class: "form-control"%>
                 </div>
-                <% end %>
-            </form>
+                <div class="form-group col-md-3 mb-3">
+                    <%= f.select :search_day, options_for_select((1..31).to_a, params[:search_day]), { include_blank: "日" }, class: "form-control"%>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-md-10 mb-3">
+            <%= f.check_box :overdue, { checked: params[:overdue] == '1', class: 'form-check-input'}, '1', '0' %>
+            <%= f.label :overdue, '延滞', class: 'form-check-label' %>
+        </div>
+        <div class="form-group col-md-10 mb-3">
+            <%= f.check_box :on_loan, { checked: params[:on_loan] == '1', class: 'form-check-input'}, '1', '0' %>
+            <%= f.label :on_loan, '貸出中', class: 'form-check-label' %>
+        </div>
+        <div class="d-flex justify-content-around">
+            <div class="mb-2 mb-md-0">
+                <%= f.submit '検索する', name: nil, class: "btn btn-primary w-100 w-md-auto" %>
+            </div>
+            <div>
+                <%= link_to 'クリア', loans_path, class: "btn btn-secondary w-100 w-md-auto" %>
+            </div>
+        </div>
+        <% end %>
         </div>
         <div class="col-9"><!-- グリッド（右列）-->
             <div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">

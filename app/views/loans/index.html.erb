@@ -15,17 +15,23 @@
                                 <%= f.label :search_stock, '資料ID' %>
                                 <%= f.text_field :search_stock, value: params[:search_stock], class: "form-control" %>
                             </div>
-                            <div class="form-group col-md-7 mb-3">
+                            <div class="form-group col-md-8 mb-3">
                             <%= f.label :search_category, '分類' %>
                             <%= f.collection_select(:search_category, Category.all, :id, :code_with_name, { include_blank: "選択してください", selected: params[:search_category]}, { class: 'form-control' }) %>
                             </div>
                             <div class="form-group col-md-12 mb-3">
-                            <%= f.label :date_range, '貸出年月日' %>
-                            <div class="input-group">
-                                <%= f.date_field :start_date, value: params[:start_date], class: "form-control", placeholder: '開始日' %>
-                                <div class="input-group-text"> 〜 </div>
-                                <%= f.date_field :end_date, value: params[:end_date], class: "form-control", placeholder: '終了日' %>
-                            </div>
+                                <%= f.label :loan_date, '貸出年月日' %>
+                                <div class="d-flex">
+                                    <div class="form-group col-md-3 mb-3">
+                                        <%= f.select :search_year, options_for_select((2000..Date.today.year).to_a, params[:search_year]), { include_blank: "年" }, class: "form-control"%>
+                                    </div>
+                                    <div class="form-group col-md-3 mb-3 mx-2">
+                                        <%= f.select :search_month, options_for_select((1..12).to_a, params[:search_month]), { include_blank: "月" }, class: "form-control"%>
+                                    </div>
+                                    <div class="form-group col-md-3 mb-3">
+                                        <%= f.select :search_day, options_for_select((1..31).to_a, params[:search_day]), { include_blank: "日" }, class: "form-control"%>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group col-md-10 mb-3">
                                 <%= f.check_box :overdue, { checked: params[:overdue] == '1', class: 'form-check-input'}, '1', '0' %>
@@ -83,3 +89,32 @@
 </div>
 
 
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const yearSelect = document.getElementById('year-select')
+    const monthSelect = document.getElementById('month-select')
+    const daySelect = document.getElementById('day-select')
+
+    function updateDayOptions() {
+    const year = yearSelect.value
+    const month = monthSelect.value
+    const daysInMonth = new Date(year, month, 0).getDate()
+
+    while (daySelect.firstChild) {
+        daySelect.removeChild(daySelect.firstChild);
+    }
+
+    for (var i = 1; i <= daysInMonth; i++) {
+        var option = document.createElement('option');
+        option.value = i;
+        option.text = i;
+        daySelect.appendChild(option);
+    }
+    }
+
+    updateDayOptions()
+
+    yearSelect.addEventListener('change', updateDayOptions);
+    monthSelect.addEventListener('change', updateDayOptions);
+})
+</script>

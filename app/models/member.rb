@@ -7,6 +7,7 @@ class Member < ApplicationRecord
               uniqueness: { case_sensitive: false }
   validates :post_code, presence: true, format: { with: /\A\d{7}\z/ }
   has_many :loans
+  validate :check_unreturned_loans, if: :remove_date_changed?
 
   # 会員が延滞しているかどうか
   def overdue?
@@ -27,6 +28,13 @@ class Member < ApplicationRecord
       # ハイフンありの形式に変換
       formatted_post_code = cleaned_post_code.insert(3, '-') if cleaned_post_code.length == 7
       self.post_code = "〒" + formatted_post_code
+    end
+  end
+  
+  def check_unreturned_loans
+    unreturned_loans = loans.where(return_date: nil)
+    if unreturned_loans.exists?
+      errors.add(:base, "未返却の資料があるため退会できません")
     end
   end
 end

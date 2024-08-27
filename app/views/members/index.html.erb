@@ -1,37 +1,33 @@
 <% @document_title = "会員台帳" %>
 <div class="container-fluid py-1">
     <div class="row"><!-- グリッド（行）-->
-        <div class="col-3"><!-- グリッド（左列）-->
-            <form class="card" action="" method="get">
-                <div class="card-header">検索フォーム</div>
-                <div class="card-body">
-                    <%= form_with url: members_path, method: :get, local: true, class: "mb-3" do |f|%>
-                        <div class="form-row">
-                            <div class="form-group col-md-4 mb-3">
-                                <%= f.label :search_id, 'ID' %>
-                                <%= f.text_field :search_id, value: params[:search_id], class: "form-control" %>
-                            </div>
-                            <div class="form-group col-md-7 mb-3">
-                                <%= f.label :search_name, '氏名' %>
-                                <%= f.text_field :search_name, value: params[:search_name], class: "form-control" %>
-                            </div>
-                            <div class="form-group col-md-10 mb-3">
-                                <%= f.check_box :removed_member, { checked: params[:removed_member] == '1', class: 'form-check-input'}, '1', '0' %>
-                                <%= f.label :removed_member, '退会済み', class: 'form-check-label' %>
-                            </div>
-                        </div>                         
-                </div>
-                <div class="card-footer d-flex justify-content-around">
-                    <div class="mb-2 mb-md-0">
-                        <%= f.submit '検索する', name: nil, class: "btn btn-primary w-100 w-md-auto" %>
-                    </div>
-                    <div>
-                        <%= link_to 'クリア', members_path, class: "btn btn-secondary w-100 w-md-auto" %>
-                    </div>
-                </div>
-                <% end %>
-            </form>
+        <div class="col-3">
+            <%= form_with url: members_path, method: :get, local: true, class: "mb-3 p-3 border border-secondary rounded" do |f| %>
+            <h5 class="mb-3 d-flex align-items-center">
+                <i class="bi bi-search me-2"></i>検索
+            </h5>
+        <div class="form-group col-md-4 mb-3">
+            <%= f.label :search_id, 'ID', class: "form-label" %>
+            <%= f.text_field :search_id, value: params[:search_id], class: "form-control" %>
         </div>
+        <div class="form-group col-md-7 mb-3">
+            <%= f.label :search_name, '氏名', class: "form-label" %>
+            <%= f.text_field :search_name, value: params[:search_name], class: "form-control" %>
+        </div>
+        <div class="form-check mb-3">
+            <%= f.check_box :removed_member, { checked: params[:removed_member] == '1', class: 'form-check-input'}, '1', '0' %>
+            <%= f.label :removed_member, '退会済み', class: 'form-check-label' %>
+        </div>
+        <div class="d-flex justify-content-around">
+            <div class="mb-2 mb-md-0">
+                <%= f.submit '検索する', name: nil, class: "btn btn-primary w-100 w-md-auto" %>
+            </div>
+            <div>
+                <%= link_to 'クリア', loans_path, class: "btn btn-secondary w-100 w-md-auto" %>
+            </div>
+        </div>
+        <% end %>
+    </div>
         <div class="col-9"><!-- グリッド（右列）-->
             <div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
                 <div class="d-flex align-items-center">
@@ -76,17 +72,3 @@
         </div>
     </div>
 </div>
-
-<% 
-=begin %>
-bootstrapはlink_toでもボタンにしてくれるので、javascriptは必要ない
-<script>
-    function clearSearch() {
-        // フォームのリセット
-        document.querySelector('form').reset();
-        // 検索条件をリセットするために、現在のページにリダイレクト
-        window.location.href = '<%= members_path %>';
-    }
-</script>
-<% 
-=end %>

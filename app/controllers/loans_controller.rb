@@ -7,6 +7,8 @@ class LoansController < ApplicationController
     search_member = params[:search_member]
     search_stock = params[:search_stock]
     serch_category = params[:search_category]
+    start_date = params[:start_date]
+    end_date = params[:end_date]
 
     @member = Member.find_by(id: search_member)
     if @member
@@ -18,6 +20,14 @@ class LoansController < ApplicationController
     @loans = @loans.where("due_date < ? AND return_date IS NULL", Date.today) if params[:overdue].to_i == 1
     @loans = @loans.where(return_date: nil) if params[:on_loan].to_i == 1
     @loans = @loans.where('catalogs.category_id = ?', serch_category) if serch_category.present?
+
+    if start_date.present? && end_date.present?
+      @loans = @loans.where(loan_date:start_date..end_date)
+    elsif start_date.present?
+      @loans = @loans.where("loan_date >= ?", start_date)
+    elsif end_date.present?
+      @loans = @loans.where("loan_date <= ?", end_date)
+    end
 
     @loans_count = @loans.total_count
   end

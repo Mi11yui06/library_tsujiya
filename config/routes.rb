@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'counters/new'
   root to: 'sessions#top'
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'

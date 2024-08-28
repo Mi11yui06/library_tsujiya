@@ -1,95 +1,77 @@
-<% @document_title = '新宿図書館' %>
-
 <div class="container mt-4">
-    <!-- 貸出・返却・新規予約 -->
-    <div class="row mb-4">
-        <div class="col-md-4 mb-4">
-            <div class="card text-center">
-                <div class="card-header bg-primary text-white">貸出</div>
-                <div class="card-body">
-                    <p>新規貸出を登録します。</p>
-                    <%= form_with url: loans_path(member_id: params[:member_id]), method: :get, local: true do |form| %>
-                    <div class="form-group mb-4">
-                        <%= form.label :member_id, "会員ID" %>
-                        <%= form.text_field :member_id, class: "form-control" %>
-                    </div>
-                    <%= form.submit "貸出登録", class: "btn btn-lg btn-primary" %>
-                    <% end %>
+
+    <!-- 受付業務: 貸出と返却 -->
+    <!-- 受付業務: 貸出と返却 -->
+    <div class="row mb-5">
+        <h3 class="h3 mb-4">受付業務</h3>
+        <div class="col-md-6 mb-4">
+            <div class="bg-light p-4 rounded text-center">
+                <h4 class="h4 mb-3 text-primary">
+                    <i class="bi bi-journal-bookmark"></i> 貸出
+                </h4>
+                <p>新規貸出を登録します。</p>
+                <%= form_with url: loans_path(member_id: params[:member_id]), method: :get, local: true do |form| %>
+                <div class="form-group mb-4 d-flex justify-content-center align-items-center">
+                    <%= form.label :member_id, "会員ID：", class: "form-label mr-2" %>
+                    <%= form.text_field :member_id, class: "form-control w-25" %>
                 </div>
+                <%= form.submit "貸出登録", class: "btn btn-primary" %>
+                <% end %>
             </div>
         </div>
-        <div class="col-md-4 mb-4">
-            <div class="card text-center">
-                <div class="card-header bg-primary text-white">返却</div>
-                <div class="card-body">
-                    <p>返却処理を行います。</p>
-                    <%= link_to '返却処理', new_loan_path, class: "btn btn-lg btn-primary" %>
+        <div class="col-md-6 mb-4">
+            <div class="bg-light p-4 rounded text-center">
+                <h4 class="h4 mb-3 text-primary">
+                    <i class="bi bi-arrow-repeat"></i> 返却
+                </h4>
+                <p>返却処理を行います。</p>
+                <%= form_with url: loans_path, method: :get, local: true do |form| %>
+                <div class="form-group mb-4 d-flex justify-content-center align-items-center">
+                    <%= form.label :member_id, "会員ID：", class: "form-label mr-2" %>
+                    <%= form.text_field :member_id, class: "form-control w-25" %>
                 </div>
+                <%= form.submit "返却処理", class: "btn btn-primary" %>
+                <% end %>
             </div>
         </div>
-<% 
-=begin %>
-        <div class="col-md-4">
-            <div class="card text-center">
-                <div class="card-header bg-warning text-white">新規予約</div>
-                <div class="card-body">
-                    <p>新規予約を登録します。</p>
-                    <%= link_to '新規予約登録', new_reservation_path, class: "btn btn-lg btn-warning" %>
-                </div>
-            </div>
-        </div>
-<% 
-=end %>
     </div>
 
-    <!-- 管理機能: 会員管理、資料目録管理、在庫管理 -->
-    <div class="row mb-4">
-        <div class="col-md-4 mb-4">
-            <div class="card text-center">
-                <div class="card-header">会員台帳管理</div>
-                <div class="card-body">
-                    <%= link_to '会員台帳管理', members_path, class: "btn btn-sm btn-outline-secondary" %>
-                </div>
+    <!-- 管理業務: 管理機能 -->
+    <div class="mb-4">
+        <h3 class="h3 mb-4">管理業務</h3>
+        <div class="row">
+            <div class="col-md-3 col-sm-6 mb-4">
+                <a href="<%= members_path %>" class="text-decoration-none text-dark">
+                    <div class="p-4 rounded text-center bg-light" style="width: 100%; max-width: 100%;">
+                        <h4 class="h6 mb-3">会員台帳管理</h4>
+                        <i class="bi bi-person-lines-fill" style="font-size: 3rem;"></i>
+                    </div>
+                </a>
             </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card text-center">
-                <div class="card-header">資料目録管理</div>
-                <div class="card-body">
-                    <%= link_to '資料目録管理', catalogs_path, class: "btn btn-sm btn-outline-secondary" %>
-                </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <a href="<%= catalogs_path %>" class="text-decoration-none text-dark">
+                    <div class="p-4 rounded text-center bg-light" style="width: 100%; max-width: 100%;">
+                        <h4 class="h6 mb-3">資料目録管理</h4>
+                        <i class="bi bi-book-half" style="font-size: 3rem;"></i>
+                    </div>
+                </a>
             </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card text-center">
-                <div class="card-header">在庫台帳管理</div>
-                <div class="card-body">
-                    <%= link_to '在庫台帳管理', stocks_path, class: "btn btn-sm btn-outline-secondary" %>
-                </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <a href="<%= stocks_path %>" class="text-decoration-none text-dark">
+                    <div class="p-4 rounded text-center bg-light" style="width: 100%; max-width: 100%;">
+                        <h4 class="h6 mb-3">在庫台帳管理</h4>
+                        <i class="bi bi-box" style="font-size: 3rem;"></i>
+                    </div>
+                </a>
             </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card text-center">
-                <div class="card-header">貸出台帳管理</div>
-                <div class="card-body">
-                    <%= link_to '貸出台帳管理', loans_path, class: "btn btn-sm btn-outline-secondary" %>
-                </div>
-            </div>
-        </div>
-    </div>
-<% 
-=begin %>
-    <!-- 延滞対応 -->
-    <div class="row mb-3">
-        <div class="col-md-12">
-            <div class="card text-center">
-                <div class="card-header bg-danger text-white">延滞対応</div>
-                <div class="card-body">
-                    <%= link_to '延滞資料一覧', overdue_items_path, class: "btn btn-danger" %>
-                </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <a href="<%= loans_path %>" class="text-decoration-none text-dark">
+                    <div class="p-4 rounded text-center bg-light" style="width: 100%; max-width: 100%;">
+                        <h4 class="h6 mb-3">貸出台帳管理</h4>
+                        <i class="bi bi-journal-text" style="font-size: 3rem;"></i>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
-<% 
-=end %>
 </div>

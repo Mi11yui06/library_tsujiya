@@ -2,21 +2,30 @@ class CatalogsController < ApplicationController
   before_action :require_logged_in
   
   def index
-    @catalogs = Catalog.order(:id).page(params[:page]).per(PER_PAGE)
+    @catalogs = Catalog.page(params[:page]).per(PER_PAGE)
 
     search_title = params[:search_title]
     search_isbn = params[:search_isbn]
     search_category = params[:search_category]
     search_author = params[:search_author]
-    seach_publisher = params[:search_publisher]
+    search_publisher = params[:search_publisher]
 
     @catalogs = @catalogs.where(isbn: search_isbn.to_i) if search_isbn.present?
     @catalogs = @catalogs.where('title LIKE ?', "%#{search_title}%") if search_title.present?
     @catalogs = @catalogs.where('author LIKE ?', "%#{search_author}%") if search_author.present?
-    @catalogs = @catalogs.where('publisher LIKE ?', "%#{seach_publisher}%") if seach_publisher.present?
+    @catalogs = @catalogs.where('publisher LIKE ?', "%#{search_publisher}%") if search_publisher.present?
     @catalogs = @catalogs.where(category_id: search_category) if search_category.present?
-    @catalogs = @catalogs.where('publish_date >= ?', 3.months.ago.to_date) if params[:recent_publication].to_i == 1
+    @catalogs = @catalogs.where('publish_date >= ?', 3.months.ago.to_date) if params[:recent_publication].to_i == 1  
 
+    case params[:sort]
+    when 'publish_date_asc'
+      @catalogs = @catalogs.order(publish_date: :asc)
+    when 'publish_date_desc'
+      @catalogs = @catalogs.order(publish_date: :desc)
+    else
+      @catalogs = @catalogs.order(id: :desc)
+    end
+    
     @catalogs_count = @catalogs.total_count
   end
 

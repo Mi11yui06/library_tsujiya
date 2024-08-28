@@ -47,6 +47,6 @@
         <td><%= f.date_select :join_date, start_year: 1950, end_year: Time.now.year %></td>
     </tr>
 </table>
-<p><%= f.submit '登録する', class: "btn btn-outline-primary"%></p>
+<p><%= f.submit '登録する', class: "btn btn-sm btn-outline-primary"%></p>
 <% end %>
 <p><%= link_to 'キャンセル', members_path %></p>

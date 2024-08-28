@@ -40,8 +40,8 @@
     <%= f.hidden_field :stock_id %>
     <%= f.hidden_field :loan_date %>
     <%= f.hidden_field :due_date %>
-    <p><%= f.submit '登録する', class: "btn btn-outline-primary" %>
-    <%= link_to '修正する', new_loan_path(member_id: @member.id, stock_id: @stock.id, loan_date: @loan.loan_date), class: "btn btn-outline-secondary" %></p>
+    <p><%= f.submit '登録する', class: "btn btn-sm btn-outline-primary" %>
+    <%= link_to '修正する', new_loan_path(member_id: @member.id, stock_id: @stock.id, loan_date: @loan.loan_date), class: "btn btn-sm btn-outline-secondary" %></p>
 <% end %>
 
 <p><%= link_to 'キャンセル', loans_path %></p>

@@ -5,31 +5,31 @@
 </div>
 <table class="table table-bordered border-dark">
     <tr>
-        <th class="table-secondary" style="width: 20%">ISBN番号</th>
+        <th class="table-light" style="width: 20%">ISBN番号</th>
         <td><%= @catalog.isbn %></td>
     </tr>
     <tr>
-        <th class="table-secondary">資料名</th>
+        <th class="table-light">資料名</th>
         <td><%= @catalog.title %></td>
     </tr>
     <tr>
-        <th class="table-secondary">分類</th>
+        <th class="table-light">分類</th>
         <td><%= @catalog.category.code %>: <%= @catalog.category.name %></td>
     </tr>
     <tr>
-        <th class="table-secondary">著者</th>
+        <th class="table-light">著者</th>
         <td><%= @catalog.author %></td>
     </tr>
     <tr>
-        <th class="table-secondary">出版社</th>
+        <th class="table-light">出版社</th>
         <td><%= @catalog.publisher %></td>
     </tr>
     <tr>
-        <th class="table-secondary">出版日</th>
+        <th class="table-light">出版日</th>
         <td><%= @catalog.publish_date %></td>
     </tr>
     <tr>
-        <th class="table-secondary">資料ID</th>
+        <th class="table-light">資料ID</th>
         <td><%= @catalog.stocks.pluck(:id).join(", ") %></td>
     </tr>
 </table>

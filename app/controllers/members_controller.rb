@@ -2,7 +2,7 @@ class MembersController < ApplicationController
   before_action :require_logged_in
   
   def index
-    @members = Member.order(:id).page(params[:page]).per(PER_PAGE)
+    @members = Member.order(id: :desc).page(params[:page]).per(PER_PAGE)
 
     # 検索パラメータを取得
     search_id = params[:search_id]

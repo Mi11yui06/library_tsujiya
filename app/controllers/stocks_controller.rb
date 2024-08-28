@@ -66,7 +66,7 @@ class StocksController < ApplicationController
   def update
     @stock = Stock.find(params[:id])
     if @stock.update(stock_params)
-      flash[:success] = '資料目録を更新しました'
+      flash[:success] = '在庫情報を更新しました'
       redirect_to stock_path(@stock)
     else
       flash.now[:danger] = '更新できませんでした'

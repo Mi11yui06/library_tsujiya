@@ -12,29 +12,29 @@
 <% end %>
 
 <%= form_with model: @catalog do |f|%>
-<table class="table table-bordered border-dark">
+<table class="table table-bordered border-secondary">
     <tr>
-        <th class="table-secondary" style="width: 20%"><%= f.label :isbn, 'ISBN番号' %><span style="color: red;">*</span></th>
+        <th class="table-light border-secondary" style="width: 20%"><%= f.label :isbn, 'ISBN番号' %><span style="color: red;">*</span></th>
         <td><%= f.text_field :isbn %></td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :title, '資料名' %><span style="color: red;">*</span></th>
+        <th class="table-light border-secondary"><%= f.label :title, '資料名' %><span style="color: red;">*</span></th>
         <td><%= f.text_field :title, size: 50 %></td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :category_id, '分類' %><span style="color: red;">*</span></th>
+        <th class="table-light border-secondary""><%= f.label :category_id, '分類' %><span style="color: red;">*</span></th>
         <td><%= f.collection_select :category_id, @categories, :id, :code_with_name, include_blank: true %></td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :author, '著者' %><span style="color: red;">*</span></th>
+        <th class="table-light border-secondary"><%= f.label :author, '著者' %><span style="color: red;">*</span></th>
         <td><%= f.text_field :author, size: 50 %></td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :publisher, '出版社' %><span style="color: red;">*</span></th>
+        <th class="table-light border-secondary"><%= f.label :publisher, '出版社' %><span style="color: red;">*</span></th>
         <td><%= f.text_field :publisher, size: 50 %></td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :publish_date, '出版日' %><span style="color: red;">*</span></th>
+        <th class="table-light border-secondary"><%= f.label :publish_date, '出版日' %><span style="color: red;">*</span></th>
         <td><%= f.date_select :publish_date, start_year: 1850, end_year: Time.now.year, include_blank: true %></td>
     </tr>
 </table>

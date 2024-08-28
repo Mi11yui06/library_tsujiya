@@ -12,29 +12,29 @@
 <% end %>
 
 <%= form_with model: @stock do |f|%>
-<table class="table table-bordered border-dark">
+<table class="table table-bordered border-secondary">
     <tr>
-        <th class="table-secondary" style="width: 20%">資料ID</th>
+        <th class="table-light border-secondary" style="width: 20%">資料ID</th>
         <td><%= @stock.id %></td>
     </tr>
     <tr>
-        <th class="table-secondary">ISBN番号</th>
+        <th class="table-light border-secondary">ISBN番号</th>
         <td><%= @stock.catalog.isbn %></td>
     </tr>
     <tr>
-        <th class="table-secondary">資料名</th>
+        <th class="table-light border-secondary">資料名</th>
         <td><%= @stock.catalog.title %></td>
     </tr>
     <tr>
-        <th class="table-secondary">入荷年月日</th>
+        <th class="table-light border-secondary">入荷年月日</th>
         <td><%= @stock.arrival_date %></td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :disposal_date, '廃棄年月日' %></th>
+        <th class="table-light border-secondary"><%= f.label :disposal_date, '廃棄年月日' %></th>
         <td><%= f.date_select :disposal_date, start_year: 1950, end_year: Time.now.year, include_blank: true, selected: Date.today %></td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :remarks, '備考' %></th>
+        <th class="table-light border-secondary"><%= f.label :remarks, '備考' %></th>
         <td><%= f.text_field :remarks, size: 100 %></td>
     </tr>
 </table>

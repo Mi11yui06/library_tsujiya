@@ -3,41 +3,41 @@
     <h1 class="h3">会員詳細画面</h1>
     <%= button_to '削除する', member_path(@member), method: :delete, onclick: "return confirm('本当に削除しますか？')" , class: "btn btn-sm btn-outline-danger"%>
 </div>
-<table class="table table-bordered border-dark">
+<table class="table table-bordered border-secondary">
     <tr>
-        <th class="table-light" style="width: 20%">ID</th>
+        <th class="table-light border-secondary" style="width: 20%">ID</th>
         <td><%= @member.id %></td>
     </tr>
     <tr>
-        <th class="table-light">氏名</th>
+        <th class="table-light border-secondary">氏名</th>
         <td><%= @member.name %></td>
     </tr>
     <tr>
-        <th class="table-light">郵便番号</th>
+        <th class="table-light border-secondary">郵便番号</th>
         <td><%= @member.post_code %></td>
     </tr>
     <tr>
-        <th class="table-light">住所</th>
+        <th class="table-light border-secondary">住所</th>
         <td><%= @member.address %></td>
     </tr>
     <tr>
-        <th class="table-light">電話番号</th>
+        <th class="table-light border-secondary">電話番号</th>
         <td><%= @member.tel %></td>
     </tr>
     <tr>
-        <th class="table-light">E-mail</th>
+        <th class="table-light border-secondary">E-mail</th>
         <td><%= @member.email %></td>
     </tr>
     <tr>
-        <th class="table-light">生年月日</th>
+        <th class="table-light border-secondary">生年月日</th>
         <td><%= @member.birth_date %></td>
     </tr>
     <tr>
-        <th class="table-light">入会年月日</th>
+        <th class="table-light border-secondary">入会年月日</th>
         <td><%= @member.join_date %></td>
     </tr>
     <tr>
-        <th class="table-light">退会年月日</th>
+        <th class="table-light border-secondary">退会年月日</th>
         <td><%= @member.remove_date %></td>
     </tr>
 </table>

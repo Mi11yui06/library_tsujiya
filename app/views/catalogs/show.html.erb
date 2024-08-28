@@ -3,33 +3,33 @@
     <h1 class="h3">資料目録詳細画面</h1>
     <%= button_to '削除する', catalog_path(@catalog), method: :delete, onclick: "return confirm('本当に削除しますか？')" , class: "btn btn-sm btn-outline-danger"%>
 </div>
-<table class="table table-bordered border-dark">
+<table class="table table-bordered border-secondary">
     <tr>
-        <th class="table-light" style="width: 20%">ISBN番号</th>
+        <th class="table-light border-secondary" style="width: 20%">ISBN番号</th>
         <td><%= @catalog.isbn %></td>
     </tr>
     <tr>
-        <th class="table-light">資料名</th>
+        <th class="table-light border-secondary">資料名</th>
         <td><%= @catalog.title %></td>
     </tr>
     <tr>
-        <th class="table-light">分類</th>
+        <th class="table-light border-secondary">分類</th>
         <td><%= @catalog.category.code %>: <%= @catalog.category.name %></td>
     </tr>
     <tr>
-        <th class="table-light">著者</th>
+        <th class="table-light border-secondary">著者</th>
         <td><%= @catalog.author %></td>
     </tr>
     <tr>
-        <th class="table-light">出版社</th>
+        <th class="table-light border-secondary">出版社</th>
         <td><%= @catalog.publisher %></td>
     </tr>
     <tr>
-        <th class="table-light">出版日</th>
+        <th class="table-light border-secondary">出版日</th>
         <td><%= @catalog.publish_date %></td>
     </tr>
     <tr>
-        <th class="table-light">資料ID</th>
+        <th class="table-light border-secondary">資料ID</th>
         <td><%= @catalog.stocks.pluck(:id).join(", ") %></td>
     </tr>
 </table>

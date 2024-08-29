@@ -1,2 +1,98 @@
-<h1>Counters#new</h1>
-<p>Find me in app/views/counters/new.html.erb</p>
+<% @document_title = "貸出/返却登録" %>
+<div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
+    <h1 class="h3">新規貸出 / 返却登録</h1>
+</div>
+<% if @member.overdue? %>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <%= @member.name %>さんは延滞中の資料があるため、現在新規貸出ができません。
+    </div>
+<% elsif @member.available_loans_count == 0 %>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <%= @member.name %>さんは既に<%= MAX_CONCURRENT_LOANS %>冊借りています。現在新規貸出はできません。
+    </div>
+<% else %>
+    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+    <%= @member.name %>さんは現在あと<%= @member.available_loans_count %>冊借りることができます。
+    </div>
+    <%= form_with url: confirm_loan_counters_path, method: :get, local: true do |f| %>
+        <%= hidden_field_tag :member_id, @member.id %>
+        <%= hidden_field_tag :loan_date, @loan_date %>
+        
+        <% if @error_messages.present? %>
+            <% @error_messages.each do |message| %>
+                <p><%= message %></p>
+            <% end %>
+        <% end %>
+        <table class="table table-bordered border-secondary">
+            <tr>
+                <th class="table-light border-secondary" style="width: 20%">会員ID</th>
+                <td><%= @member.id %></td>
+            </tr>
+            <tr>
+                <th class="table-light border-secondary">会員名</th>
+                <td><%= @member.name %></td>
+            </tr>
+            <% @member.available_loans_count.times do |i| %>
+                <% stock_ids = params[:loan] && params[:loan][:stock_ids] ? params[:loan][:stock_ids] : [] %>
+                <% stock_id = stock_ids[i] %>
+                <tr>
+                    <th class="table-light border-secondary">資料ID</th>
+                    <td>
+                        <%= f.text_field "loan[stock_ids][]", value: stock_id %>
+                        <% if @errors.present? %>
+                            <div class="text-danger">
+                                <% @errors.each do |id, message| %>
+                                    <% if id.to_s == stock_id %>
+                                        <p>資料ID <%= id %>: <%= message %></p>
+                                    <% end %>
+                                <% end %>
+                            </div>
+                        <% end %>
+                    </td>
+                </tr>
+            <% end %>
+            <tr>
+                <th class="table-light border-secondary">貸出年月日<span style="color: red;">*</span></th>
+                <td><%= f.date_field :loan_date, size: 50, value: @loan_date || Date.today %></td></td>
+            </tr>
+        </table>
+        <p><%= f.submit "貸出確認画面へ",name: nil, class: "btn btn-sm btn-outline-secondary mt-3" %></p>
+    <% end %>
+<% end %>
+<p><%= link_to 'ホーム画面に戻る',root_path %></p>
+
+<h4>未返却の資料（<%= @member.loans.where(return_date: nil).count %>冊）</h4>
+<%= form_with url: confirm_return_counters_path, method: :get, local: true do |f| %>
+    <%= hidden_field_tag :member_id, @member.id %>
+    <%= hidden_field_tag :loan_date, @loan_date %>
+    <table class="table table-hover mt-3">
+        <thead>
+            <tr>
+                <th class="nowrap">返却</th>
+                <th class="nowrap">資料ID</th>
+                <th class="text-truncate">資料名</th>
+                <th class="nowrap">貸出年月日</th>
+                <th class="nowrap">返却期日</th>
+                <th class="nowrap">超過日数</th>
+                <th class="text-truncate">備考</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            <% @return_loans.each do |loan| %>
+                <tr>
+                    <td><%= check_box_tag "loan_ids[]", loan.id, params[:loan_ids]&.include?(loan.id.to_s)%></td>
+                    <td class="nowrap"><%= loan.stock_id %></td>
+                    <td class="text-truncate" style="max-width: 150px;"><%= loan.stock.catalog.title %></td>
+                    <td class="nowrap"><%= loan.loan_date %></td>
+                    <td class="nowrap"><%= loan.due_date %></td>
+                    <td class="nowrap"><%= loan.overdue_days %></td>
+                    <td class="text-truncate" style="max-width: 150px;"><%= loan.remarks %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+    <% if @error_message %>
+        <p><%= @error_message %></p>
+    <% end %>
+    <%= f.submit "返却確認画面へ",name: nil, class: "btn btn-sm btn-outline-secondary mt-3" %>
+<% end %>

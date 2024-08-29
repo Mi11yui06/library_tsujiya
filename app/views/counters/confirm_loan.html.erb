@@ -1,0 +1,51 @@
+<% @document_title = "貸出確認" %>
+<div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
+    <h1 class="h3">貸出確認</h1>
+</div>
+<p>以下の資料を貸出しますか？</p>
+<%= form_with url: counters_path, method: :post, local: true do |f| %>
+    <%= hidden_field_tag :member_id, @member.id %>
+    <%= hidden_field_tag :loan_date, @loan_date %>
+    <%= hidden_field_tag :stock_ids, @loans_to_confirm.map(&:stock_id).join(',') %>
+    <table class="table table-bordered border-secondary">
+        <tr>
+            <th class="table-light border-secondary", style="width: 20%">会員ID</th>
+            <td><%= @member.id %></td>
+        </tr>
+        <tr>
+            <th class="table-light border-secondary">会員名</th>
+            <td><%= @member.name %></td>
+        </tr>
+    </table>
+    <table class="table table-bordered border-secondary">
+        <thead>
+        <tr>
+            <th class="table-light border-secondary", style="width: 10%">資料ID</th>
+            <th class="table-light border-secondary", style="width: 20%">ISBN番号</th>
+            <th class="table-light border-secondary", style="width: 40%">資料名</th>
+            <th class="table-light border-secondary">貸出年月日</th>
+            <th class="table-light border-secondary">返却期日</th>
+        </tr>
+        </thead>
+        <tbody>
+            <% @loans_to_confirm.each.each do |loan| %>
+                <tr>
+                <td><%= loan.stock_id %></td>
+                <td><%= loan.stock.catalog.isbn %></td>
+                <td>
+                    <%= loan.stock.catalog.title %>
+                    <% if loan.stock.new_book? %>
+                        <span style="color: red;">※新刊</span>
+                    <% end %>
+                </td>
+                <td><%= loan.loan_date %></td>
+                <td><%= loan.due_date %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+    <p>
+        <%= f.submit "登録する", class: "btn btn-sm btn-outline-primary" %>
+        <%= link_to '修正する', new_counter_path(member_id: @member.id, stock_ids: @loans_to_confirm.map(&:stock_id).join(','), loan_date: @loan_date), class: "btn btn-sm btn-outline-secondary" %>
+    </p>
+<% end %>

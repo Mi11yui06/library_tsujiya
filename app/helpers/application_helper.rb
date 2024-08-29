@@ -19,7 +19,8 @@ module ApplicationHelper
     'loans#edit' => [['貸出台帳', :loans_path], ['貸出詳細', :loan_path], ['貸出情報編集', :edit_loan_path]],
     'loans#confirm' => [['貸出台帳', :loans_path], ['新規貸出登録', :new_loan_path],  ['貸出編集確認', :confirm_loans_path]],
     'counters#new' =>  [['貸出 / 返却', :new_counter_path]],
-    'counters#confirm_return' =>  [['貸出 / 返却', :new_counter_path], ['返却確認', :confirm_return_counters_path]]
+    'counters#confirm_return' =>  [['貸出 / 返却', :new_counter_path], ['返却確認', :confirm_return_counters_path]],
+    'counters#confirm_loan' =>  [['貸出 / 返却', :new_counter_path], ['貸出確認', :confirm_loan_counters_path]]
   }.freeze
   
   def breadcrumb_trail

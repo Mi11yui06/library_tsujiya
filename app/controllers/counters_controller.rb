@@ -1,4 +1,5 @@
 class CountersController < ApplicationController
+  before_action :require_logged_in
   def new #new画面用
     @member = Member.find_by(id: params[:member_id])
     if @member

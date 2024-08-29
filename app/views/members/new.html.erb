@@ -14,11 +14,11 @@
 <%= form_with model: @member do |f|%>
 <table class="table table-bordered border-dark">
     <tr>
-        <th class="table-secondary" style="width: 20%"><%= f.label :name, '氏名' %><span style="color: red;">*</span></th>
+        <th class="table-light border-secondary" style="width: 20%"><%= f.label :name, '氏名' %><span style="color: red;">*</span></th>
         <td><%= f.text_field :name %></td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :post_code, '郵便番号' %><span style="color: red;">*</span></th>
+        <th class="table-light border-secondary"><%= f.label :post_code, '郵便番号' %><span style="color: red;">*</span></th>
         <td>
             <div class="d-flex align-items-center">
             <%= f.text_field :post_code %>
@@ -27,23 +27,23 @@
         </td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :address, '住所' %><span style="color: red;">*</span></th>
+        <th class="table-light border-secondary"><%= f.label :address, '住所' %><span style="color: red;">*</span></th>
         <td><%= f.text_field :address, size: 50 %></td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :tel, '電話番号' %><span style="color: red;">*</span></th>
+        <th class="table-light border-secondary"><%= f.label :tel, '電話番号' %><span style="color: red;">*</span></th>
         <td><%= f.text_field :tel %></td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :email, 'E-mail' %><span style="color: red;">*</span></th>
+        <th class="table-light border-secondary"><%= f.label :email, 'E-mail' %><span style="color: red;">*</span></th>
         <td><%= f.email_field :email, size: 50 %></td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :birth_date, '生年月日' %><span style="color: red;">*</span></th>
+        <th class="table-light border-secondary"><%= f.label :birth_date, '生年月日' %><span style="color: red;">*</span></th>
         <td><%= f.date_select :birth_date, start_year: 1950, end_year: Time.now.year %></td>
     </tr>
     <tr>
-        <th class="table-secondary"><%= f.label :join_date, '入会年月日' %><span style="color: red;">*</span></th>
+        <th class="table-light border-secondary"><%= f.label :join_date, '入会年月日' %><span style="color: red;">*</span></th>
         <td><%= f.date_select :join_date, start_year: 1950, end_year: Time.now.year %></td>
     </tr>
 </table>

@@ -6,8 +6,9 @@
 <table class="table table-bordered border-secondary">
     <thead>
     <tr>
-        <th class="table-light border-secondary">資料ID</th>
-        <th class="table-light border-secondary">資料名</th>
+        <th class="table-light border-secondary", style="width: 10%">資料ID</th>
+        <th class="table-light border-secondary", style="width: 20%">ISBN番号</th>
+        <th class="table-light border-secondary", style="width: 40%">資料名</th>
         <th class="table-light border-secondary">貸出年月日</th>
         <th class="table-light border-secondary">返却期日</th>
     </tr>
@@ -16,6 +17,7 @@
         <% @loans_to_return.each do |loan| %>
             <tr>
             <td><%= loan.stock_id %></td>
+            <td><%= loan.stock.catalog.isbn %></td>
             <td><%= loan.stock.catalog.title %></td>
             <td><%= loan.loan_date %></td>
             <td><%= loan.due_date %></td>

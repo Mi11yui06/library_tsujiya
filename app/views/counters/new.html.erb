@@ -16,6 +16,8 @@
     </div>
     <%= form_with url: confirm_loan_counters_path, method: :get, local: true do |f| %>
         <%= hidden_field_tag :member_id, @member.id %>
+        <%= hidden_field_tag :loan_date, @loan_date %>
+        
         <% if @error_messages.present? %>
             <% @error_messages.each do |message| %>
                 <p><%= message %></p>
@@ -31,15 +33,17 @@
                 <td><%= @member.name %></td>
             </tr>
             <% @member.available_loans_count.times do |i| %>
+                <% stock_ids = params[:loan] && params[:loan][:stock_ids] ? params[:loan][:stock_ids] : [] %>
+                <% stock_id = stock_ids[i] %>
                 <tr>
-                    <th class="table-light border-secondary">資料ID<%= i == 0 ? '<span style="color: red;">*</span>'.html_safe : '' %></th>
+                    <th class="table-light border-secondary">資料ID</th>
                     <td>
-                        <%= f.text_field "loan[stock_ids][]" ,value: params.dig(:loan, :stock_ids).to_a[i] %>
+                        <%= f.text_field "loan[stock_ids][]", value: stock_id %>
                         <% if @errors.present? %>
                             <div class="text-danger">
-                                <% @errors.each do |stock_id, message| %>
-                                    <% if stock_id.to_s == params.dig(:loan, :stock_ids).to_a[i] %>
-                                        <p>資料ID <%= stock_id %>: <%= message %></p>
+                                <% @errors.each do |id, message| %>
+                                    <% if id.to_s == stock_id %>
+                                        <p>資料ID <%= id %>: <%= message %></p>
                                     <% end %>
                                 <% end %>
                             </div>
@@ -49,7 +53,7 @@
             <% end %>
             <tr>
                 <th class="table-light border-secondary">貸出年月日<span style="color: red;">*</span></th>
-                <td><%= f.date_field :loan_date, size: 50, value: Date.today %></td></td>
+                <td><%= f.date_field :loan_date, size: 50, value: @loan_date || Date.today %></td></td>
             </tr>
         </table>
         <p><%= f.submit "貸出確認画面へ",name: nil, class: "btn btn-sm btn-outline-secondary mt-3" %></p>
@@ -69,7 +73,6 @@
                 <th class="text-truncate">資料名</th>
                 <th class="nowrap">貸出年月日</th>
                 <th class="nowrap">返却期日</th>
-                <th class="nowrap">返却年月日</th>
                 <th class="nowrap">超過日数</th>
                 <th class="text-truncate">備考</th>
             </tr>
@@ -82,7 +85,6 @@
                     <td class="text-truncate" style="max-width: 150px;"><%= loan.stock.catalog.title %></td>
                     <td class="nowrap"><%= loan.loan_date %></td>
                     <td class="nowrap"><%= loan.due_date %></td>
-                    <td class="nowrap"><%= loan.return_date %></td>
                     <td class="nowrap"><%= loan.overdue_days %></td>
                     <td class="text-truncate" style="max-width: 150px;"><%= loan.remarks %></td>
                 </tr>

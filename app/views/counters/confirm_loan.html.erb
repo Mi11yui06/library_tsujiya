@@ -20,8 +20,9 @@
     <table class="table table-bordered border-secondary">
         <thead>
         <tr>
-            <th class="table-light border-secondary">資料ID</th>
-            <th class="table-light border-secondary">資料名</th>
+            <th class="table-light border-secondary", style="width: 10%">資料ID</th>
+            <th class="table-light border-secondary", style="width: 20%">ISBN番号</th>
+            <th class="table-light border-secondary", style="width: 40%">資料名</th>
             <th class="table-light border-secondary">貸出年月日</th>
             <th class="table-light border-secondary">返却期日</th>
         </tr>
@@ -30,6 +31,7 @@
             <% @loans_to_confirm.each.each do |loan| %>
                 <tr>
                 <td><%= loan.stock_id %></td>
+                <td><%= loan.stock.catalog.isbn %></td>
                 <td>
                     <%= loan.stock.catalog.title %>
                     <% if loan.stock.new_book? %>
@@ -44,6 +46,6 @@
     </table>
     <p>
         <%= f.submit "登録する", class: "btn btn-sm btn-outline-primary" %>
-        <%= link_to '修正する', new_counter_path(member_id: @member.id, stock_ids: @loans_to_confirm.map(&:stock_id).join(','), loan_date: params[:loan_date]), class: "btn btn-sm btn-outline-secondary" %>
+        <%= link_to '修正する', new_counter_path(member_id: @member.id, stock_ids: @loans_to_confirm.map(&:stock_id).join(','), loan_date: @loan_date), class: "btn btn-sm btn-outline-secondary" %>
     </p>
 <% end %>

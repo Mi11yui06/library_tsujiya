@@ -1,4 +1,4 @@
-<% if logged_in? %>
+<% if logged_in? && request.path != root_path %>
     <% flash.each do |type, message|%>
         <div class = "alert alert-<%= type %>"><%= message%></div>
     <% end %>

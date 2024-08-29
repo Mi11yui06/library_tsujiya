@@ -1,0 +1,37 @@
+<% @document_title = "返却確認" %>
+<div class="pb-2 border-bottom mb-3 d-flex justify-content-between align-items-start">
+    <h1 class="h3">返却確認</h1>
+</div>
+<p>以下の資料を返却しますか？</p>
+<table class="table table-bordered border-secondary">
+    <thead>
+    <tr>
+        <th class="table-light border-secondary">資料ID</th>
+        <th class="table-light border-secondary">資料名</th>
+        <th class="table-light border-secondary">貸出年月日</th>
+        <th class="table-light border-secondary">返却期日</th>
+    </tr>
+    </thead>
+    <tbody>
+        <% @loans_to_return.each do |loan| %>
+            <tr>
+            <td><%= loan.stock_id %></td>
+            <td><%= loan.stock.catalog.title %></td>
+            <td><%= loan.loan_date %></td>
+            <td><%= loan.due_date %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+
+<%= form_with url: counter_path(@member.id), method: :patch, local: true do |f| %>
+    <%= hidden_field_tag :member_id, @member.id %>
+    <% @loans_to_return.each do |loan| %>
+        <%= hidden_field_tag 'loan_ids[]', loan.id %>
+    <% end %>
+    <p>
+        <%= f.submit "返却する", class: "btn btn-sm btn-outline-primary" %>
+        <%= link_to "修正する", new_counter_path(member_id: @member.id, loan_ids: @loans_to_return.map(&:id)), class: "btn btn-sm btn-outline-secondary" %>
+    </p>
+<% end %>
+

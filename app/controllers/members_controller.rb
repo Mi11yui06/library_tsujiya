@@ -54,9 +54,14 @@ class MembersController < ApplicationController
 
   def destroy
     @member = Member.find(params[:id])
-    @member.destroy
-    flash[:success] = '削除しました'
-    redirect_to members_path
+    if @member.loans.exists?
+      flash[:danger] = '貸出台帳と紐づいているため削除できません'
+      redirect_to member_path(@member) 
+    else
+      @member.destroy
+      flash[:success] = '削除しました'
+      redirect_to members_path
+    end
   end
 
   private

@@ -76,9 +76,14 @@ class StocksController < ApplicationController
 
   def destroy
     @stock = Stock.find(params[:id])
-    @stock.destroy
-    flash[:success] = '削除しました'
-    redirect_to stocks_path
+    if @stock.loans.exists?
+      flash[:danger] = '貸出台帳と紐づいているため削除できません'
+      redirect_to stock_path(@stock) 
+    else
+      @stock.destroy
+      flash[:success] = '削除しました'
+      redirect_to stocks_path
+    end
   end
 
   private

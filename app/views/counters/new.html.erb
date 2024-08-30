@@ -61,7 +61,7 @@
 <% end %>
 <p><%= link_to 'ホーム画面に戻る',root_path %></p>
 
-<h4>未返却の資料（<%= @member.loans.where(return_date: nil).count %>冊）</h4>
+<h4>貸出中の資料（<%= @member.loans.where(return_date: nil).count %>冊）</h4>
 <%= form_with url: confirm_return_counters_path, method: :get, local: true do |f| %>
     <%= hidden_field_tag :member_id, @member.id %>
     <%= hidden_field_tag :loan_date, @loan_date %>

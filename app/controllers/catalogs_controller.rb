@@ -1,6 +1,5 @@
 class CatalogsController < ApplicationController
   before_action :require_logged_in
-  
   def index
     @catalogs = Catalog.page(params[:page]).per(PER_PAGE)
 
@@ -70,9 +69,15 @@ class CatalogsController < ApplicationController
 
   def destroy
     @catalog = Catalog.find(params[:id])
-    @catalog.destroy
-    flash[:success] = '削除しました'
-    redirect_to catalogs_path
+  
+    if @catalog.stocks.exists?
+      flash[:danger] = '在庫台帳と紐づいているため、削除できません。'
+      redirect_to catalog_path(@catalog)
+    else
+      @catalog.destroy
+      flash[:success] = '削除しました'
+      redirect_to catalogs_path
+    end
   end
 
   private
